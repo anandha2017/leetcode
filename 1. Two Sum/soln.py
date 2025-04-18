@@ -6,18 +6,17 @@ You may assume that each input would have exactly one solution, and you may not 
 You can return the answer in any order.
 
 Example 1:
+    Input: nums = [2,7,11,15], target = 9
+    Output: [0,1]
+    Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].
 
-Input: nums = [2,7,11,15], target = 9
-Output: [0,1]
-Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].
 Example 2:
+    Input: nums = [3,2,4], target = 6
+    Output: [1,2]
 
-Input: nums = [3,2,4], target = 6
-Output: [1,2]
 Example 3:
-
-Input: nums = [3,3], target = 6
-Output: [0,1]
+    Input: nums = [3,3], target = 6
+    Output: [0,1]
  
 
 Constraints:
@@ -26,12 +25,12 @@ Constraints:
 -109 <= nums[i] <= 109
 -109 <= target <= 109
 Only one valid answer exists.
- 
+
 
 Follow-up: Can you come up with an algorithm that is less than O(n2) time complexity? 
 """
 
-import pytest
+# import pytest
 from typing import List
 
 class Solution:
@@ -39,24 +38,31 @@ class Solution:
 
         for i, num1 in enumerate(nums):
             for j, num2 in enumerate(nums):
-                if nums[i] + nums[j] == target:
+                if (i != j) and (nums[i] + nums[j]) == target:
                     return [i,j]
 
 
-# Create an instance of the Solution class
 solution = Solution()
 
-# Test case 1: Basic example
-assert sorted(solution.twoSum([2, 7, 11, 15], 9)) == [0, 1]
+# — Normal scenarios —
+print(solution.twoSum([2, 7, 11, 15], 9)    == [0, 1])   # example 1
+print(solution.twoSum([3, 2, 4], 6)         == [1, 2])   # example 2
+print(solution.twoSum([3, 3], 6)            == [0, 1])   # example 3
 
-# # Example inputs
-# nums = [2, 7, 11, 15]
-# target = 9
+# — Boundary: minimal length (nums.length = 2) —
+print(solution.twoSum([1, 1], 2)            == [0, 1])
 
-# # Call the twoSum method
-# result = sol1.twoSum(nums, target)
+# — Boundary: including zeros —
+print(solution.twoSum([0, 4, 3, 0], 0)      == [0, 3])
 
-# # Print the result
-# print(result)  # Should print [0, 1]
+# — Boundary: extreme values (±10^9) —
+print(solution.twoSum([10**9, -10**9], 0)   == [0, 1])
 
-# print(sol1.twoSum([[3,2,4]],6))  # Output: [1,2]
+# — Mixed negatives —
+print(solution.twoSum([-1, -2, -3, -4, -5], -8) == [2, 4])
+
+# — Duplicates but only one correct pair —
+print(solution.twoSum([1, 5, 5, 2], 10)     == [1, 2])
+
+# — Error scenario (no valid answer; out of LeetCode spec) —
+print(solution.twoSum([1, 2, 3], 7)         is None)
