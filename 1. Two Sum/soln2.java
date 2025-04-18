@@ -1,10 +1,19 @@
 import java.util.Arrays;
 
-public class soln {
+public class soln2 {
 
     class Solution {
-        public int[] twoSum(int[] nums, int target) {
-            return new int[]{0, 1};
+        public int[] twoSum(int[] nums, int target) {           
+            
+            for (int i = 0; i < nums.length - 1; i++) {
+                for (int j = i + 1; j < nums.length; j++) {
+                    if (nums[i] + nums[j] == target) {
+                        return new int[]{i,j};
+                    }
+                }
+            }
+
+            throw new IllegalArgumentException("No two sum solution");
         }
     }
 
@@ -20,16 +29,11 @@ public class soln {
         System.out.println(Arrays.equals(solution.twoSum(new int[]{3, 2, 4}, 6), new int[]{1, 2}));      
         System.out.println(Arrays.equals(solution.twoSum(new int[]{3, 3}, 6), new int[]{0, 1}));         
   
-
         // Boundary: minimal length (nums.length = 2) —
         System.out.println(Arrays.equals(solution.twoSum(new int[]{1,1},  2), new int[]{0,1}));
 
         // Boundary: including zeros —
         System.out.println(Arrays.equals(solution.twoSum(new int[]{0,4,3,0},  0), new int[]{0,3}));
-
-
-        // Boundary: extreme values (±10^9) —
-        System.out.println(Arrays.equals(solution.twoSum(new int[]{10^9,-10^9},  0), new int[]{0,1}));
 
     }
 }

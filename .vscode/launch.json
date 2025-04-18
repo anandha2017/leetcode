@@ -17,6 +17,12 @@
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal"
+        },
+        {
+            "type": "java",
+            "name": "Debug Java (Launch) - Current File",
+            "request": "launch",
+            "mainClass": "${file}"
         }
     ]
 }
