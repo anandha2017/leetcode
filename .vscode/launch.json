@@ -5,6 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "type": "java",
+            "name": "soln",
+            "request": "launch",
+            "mainClass": "soln",
+            "projectName": "leetcode_79b0887f"
+        },
+        {
             "name": "Python Debugger: Current File",
             "type": "debugpy",
             "request": "launch",

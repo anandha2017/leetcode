@@ -30,16 +30,16 @@ Only one valid answer exists.
 Follow-up: Can you come up with an algorithm that is less than O(n2) time complexity? 
 """
 
-# import pytest
 from typing import List
 
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
-
-        for i, num1 in enumerate(nums):
-            for j, num2 in enumerate(nums):
-                if (i != j) and (nums[i] + nums[j]) == target:
-                    return [i,j]
+        seen = {}  # value → index
+        for i, num in enumerate(nums):
+            comp = target - num
+            if comp in seen:
+                return [seen[comp], i]
+            seen[num] = i
 
 
 solution = Solution()
