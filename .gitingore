@@ -97,3 +97,6 @@ ENV/
 *.iws
 out/
 .factorypath
+
+# Ignore VS Code launch configurations
+.vscode/launch.json
