@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "soln3",
+            "request": "launch",
+            "mainClass": "soln3",
+            "projectName": "leetcode_79b0887f"
+        },
+        {
+            "type": "java",
+            "name": "soln2",
+            "request": "launch",
+            "mainClass": "soln2",
+            "projectName": "leetcode_79b0887f"
+        },
+        {
+            "type": "java",
             "name": "soln",
             "request": "launch",
             "mainClass": "soln",
