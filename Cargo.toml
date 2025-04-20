@@ -1,3 +1,6 @@
 [workspace]
 resolver = "3"
-members = ["Leet0001_TwoSum/rust"]
+members = [
+  "Leet0001_TwoSum/rust",
+  "Leet0009_PalindromeNumber/rust",
+]

@@ -5,3 +5,7 @@ version = 4
 [[package]]
 name = "leet0001_twosum"
 version = "0.1.0"
+
+[[package]]
+name = "leet0002_palindromenumber"
+version = "0.1.0"
