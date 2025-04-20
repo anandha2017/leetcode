@@ -45,14 +45,22 @@ coverage.xml
 
 # Cargo.lock is intentionally committed for reproducible builds
 
+# ─── TypeScript / Node ────────────────────────────────────────────────────────
+
+/ts/node_modules/
+/ts/dist/
+/ts/*.log
+
 # ─── Go ───────────────────────────────────────────────────────────────────────
 *.exe
 *.exe~
 *.dll
 *.so
 *.dylib
+
 # go test binaries
 *.test
+
 # coverage output
 *.out
 /go.work
@@ -69,6 +77,7 @@ coverage.xml
 *.zip
 *.tar.gz
 *.rar
+
 # crash logs
 hs_err_pid*
 replay_pid*
@@ -85,18 +94,6 @@ replay_pid*
 .vscode/
 .vscode/launch.json
 
-# IntelliJ / Android Studio
-*.iml
-*.iws
-*.ipr
-.idea/
-
-# Eclipse
-.factorypath
-.project
-.classpath
-.settings/
-
 # general
 *.swp
 *.swo
@@ -109,8 +106,3 @@ replay_pid*
 env/
 venv/
 ENV/
-
-# Spyder / Rope
-.spyderproject
-.spyproject
-.ropeproject
