@@ -22,7 +22,6 @@ impl Solution {
     }
 }
 
-
 /* 
 impl Solution {
     pub fn is_palindrome(x: i32) -> bool {
@@ -56,7 +55,8 @@ function isPalindrome(x: number): boolean {
     
     return (reverse == x)
 };
- */
+*/
+
 fn main() {
 
     println!("{}", Solution::is_palindrome(121) == true);

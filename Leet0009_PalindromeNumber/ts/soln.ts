@@ -32,7 +32,7 @@ solution = Solution()
 print(solution.isPalindrome(121)   == True)    # example 1
 print(solution.isPalindrome(-121)  == False)   # example 2
 print(solution.isPalindrome(10)    == False)   # example 3
- */
+*/
 
 console.log(isPalindrome(121)==true)
 console.log(isPalindrome(-121)==false)

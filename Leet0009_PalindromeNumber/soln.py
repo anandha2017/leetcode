@@ -11,7 +11,6 @@ class Solution:
 
         return (reverse == x)
 
-
 solution = Solution()
 print(solution.isPalindrome(121)   == True)    # example 1
 print(solution.isPalindrome(-121)  == False)   # example 2

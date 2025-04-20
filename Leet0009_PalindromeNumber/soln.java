@@ -30,7 +30,7 @@ function isPalindrome(x: number): boolean {
     
     return (reverse == x)
 };
- */
+*/
     public static void main(String[] args) {
         // Create an instance of the outer class
         soln outer = new soln();
