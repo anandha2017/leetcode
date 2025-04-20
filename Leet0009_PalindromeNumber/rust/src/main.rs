@@ -2,6 +2,30 @@ struct Solution;
 
 impl Solution {
     pub fn is_palindrome(x: i32) -> bool {
+        // Negative numbers or numbers ending in 0 (but not 0 itself) cannot be palindromes
+        if x < 0 || (x % 10 == 0 && x != 0) {
+            return false;
+        }
+        
+        let mut n = x;
+        let mut reverted: i32 = 0;
+        
+        // Only reverse half of the digits
+        while n > reverted {
+            reverted = reverted * 10 + n % 10;
+            n /= 10;
+        }
+        
+        // For even-length numbers: n == reverted
+        // For odd-length numbers: n == reverted/10 (middle digit ignored)
+        n == reverted || n == reverted / 10
+    }
+}
+
+
+/* 
+impl Solution {
+    pub fn is_palindrome(x: i32) -> bool {
         if x < 0 {
             return false;
         }
@@ -16,6 +40,7 @@ impl Solution {
         return reverse == x;
     }
 }
+ */
 /* 
 function isPalindrome(x: number): boolean {
     if (x < 0) {
