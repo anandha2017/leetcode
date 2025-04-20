@@ -39,7 +39,7 @@ impl Solution {
         return reverse == x;
     }
 }
- */
+*/
 /* 
 function isPalindrome(x: number): boolean {
     if (x < 0) {
