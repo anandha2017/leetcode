@@ -59,9 +59,9 @@ function isPalindrome(x: number): boolean {
 
 fn main() {
 
-    println!("{}", Solution::is_palindrome(121) == true);
-    println!("{}", Solution::is_palindrome(-121) == false);
-    println!("{}", Solution::is_palindrome(10) == false);
-    println!("{}", Solution::is_palindrome(0) == true);
-    println!("{}", Solution::is_palindrome(8) == true);
+    println!("{}", Solution::is_palindrome(121));
+    println!("{}", !Solution::is_palindrome(-121));
+    println!("{}", !Solution::is_palindrome(10));
+    println!("{}", Solution::is_palindrome(0));
+    println!("{}", Solution::is_palindrome(8));
 }
