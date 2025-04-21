@@ -8,23 +8,48 @@ class ListNode:
 class Solution:
     def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
         
-        current = l1
-        while current:
-            print(current.val)
-            current = current.next
+        currentl1 = l1
+        currentl2 = l2
 
-        current = l2
-        while current:
-            print(current.val)
-            current = current.next
-        
+        carry = 0
+        n1 = 0
+        n2 = 0
+        total = 0
+        output = ListNode()
+        head = output
+
+        while currentl1 or currentl1:
+            if currentl1:
+                n1 = currentl1.val
+                currentl1 = currentl1.next
+            else:
+                n1 = 0
+
+            if currentl2:
+                n2 = currentl2.val
+                currentl2 = currentl2.next
+            else:
+                n2 = 0
+            
+            total = n1 + n2
+            print(n1, " + ", n2, " = ", total)
+            if total >= 10:
+                print('carry needed')
+            else:
+                print('carry not needed')
+                output.val = total
+            
+            output.next = ListNode()
+
+
+
         node1 = ListNode(7)
         node2 = ListNode(0)
         node3 = ListNode(8)
         node1.next = node2
         node2.next = node3
         # node1 is now the head of [7 → 0 → 8]
-        return node1
+        return head
     
 # helper functions
 def to_pylist(head: Optional[ListNode]) -> list[int]:
@@ -55,7 +80,7 @@ def to_ListNode(values: list[int]) -> Optional[ListNode]:
 solution = Solution()
 
 # Given examples
-print(to_pylist(solution.addTwoNumbers(to_ListNode([2,4,3]),       to_ListNode([5,6,4])))       == [7,0,8])            # Expecting [7,0,8]
+print(to_pylist(solution.addTwoNumbers(to_ListNode([2,3,3,0,0,0]),       to_ListNode([5,6,4])))       == [7,0,8])            # Expecting [7,0,8]
 """ 
 print(to_pylist(solution.addTwoNumbers([0],           [0]))           == [0])                # Expecting [0]
 print(to_pylist(solution.addTwoNumbers([9,9,9,9,9,9,9], [9,9,9,9]))   == [8,9,9,9,0,0,0,1])  # Expecting [8,9,9,9,0,0,0,1]
