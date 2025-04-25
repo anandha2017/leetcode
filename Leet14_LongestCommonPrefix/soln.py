@@ -37,6 +37,13 @@ class Solution:
 
         longestPrefix = ""
 
+        if not strs:
+            return ""
+        
+        # Short-circuit if only one string exists
+        if len(strs) == 1:
+            return strs[0]
+
         for outerWord in strs:
             for x in range(len(outerWord)):
                 prefix = outerWord[0:x+1]
@@ -53,6 +60,7 @@ class Solution:
                 prefixFound = False 
 
         return longestPrefix        
+
 
 solution = Solution()
 
