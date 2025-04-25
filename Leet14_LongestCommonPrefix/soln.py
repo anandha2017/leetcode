@@ -35,14 +35,14 @@ class Solution:
         #                 c = outerWord[x:x+y+1]
         #                 print(f"outerWord: {outerWord}, w: {w}, c: {c}")
 
-        longestPrefix = ""
-
         if not strs:
             return ""
         
         # Short-circuit if only one string exists
         if len(strs) == 1:
             return strs[0]
+
+        longestPrefix = ""
 
         for outerWord in strs:
             for x in range(len(outerWord)):
