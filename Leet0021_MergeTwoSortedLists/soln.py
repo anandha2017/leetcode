@@ -22,7 +22,20 @@ class Solution:
                 current = current.next
                 list2 = list2.next
 
-        return sentinel.next
+        current = sentinel.next
+        if current is None:
+            return None
+        
+        vals = []
+        while current:
+            vals.append(current.val)
+            current = current.next
+
+        vals.sort()
+
+        current = to_list_node(vals)
+                
+        return current
 
 
 solution = Solution()
@@ -91,58 +104,83 @@ def assert_solution(list1: Optional[ListNode], list2: Optional[ListNode], expect
         print_list_node(list2)
 
 # Provided examples
-assert_solution(to_list_node([1,2,3]), to_list_node([4,5,6]), to_list_node([1,4,2,5,3,6]))
-assert_solution(to_list_node([1,2,3]), to_list_node([4,5,6,7]), to_list_node([1,4,2,5,3,6,7]))
-assert_solution(to_list_node([1,2,3,4]), to_list_node([4,5,6]), to_list_node([1,4,2,5,3,6,4]))
+assert_solution(to_list_node([2,5,7]), to_list_node([1,3,6,8]), to_list_node([1,2,3,5,6,7,8]))
 assert_solution(to_list_node([]), to_list_node([]), to_list_node([]))
 assert_solution(to_list_node([1]), to_list_node([]), to_list_node([1]))
 assert_solution(to_list_node([]), to_list_node([1]), to_list_node([1]))
 assert_solution(to_list_node([0]), to_list_node([1]), to_list_node([0,1]))
 
-# --- original sanity-check group -------------------------------------------
-assert_solution(to_list_node([1, 2, 3]),       to_list_node([4, 5, 6]),       to_list_node([1, 4, 2, 5, 3, 6]))
-assert_solution(to_list_node([1, 2, 3]),       to_list_node([4, 5, 6, 7]),    to_list_node([1, 4, 2, 5, 3, 6, 7]))
-assert_solution(to_list_node([1, 2, 3, 4]),    to_list_node([4, 5, 6]),       to_list_node([1, 4, 2, 5, 3, 6, 4]))
-assert_solution(to_list_node([]),              to_list_node([]),              to_list_node([]))
-assert_solution(to_list_node([1]),             to_list_node([]),              to_list_node([1]))
-assert_solution(to_list_node([]),              to_list_node([1]),             to_list_node([1]))
-assert_solution(to_list_node([0]),             to_list_node([1]),             to_list_node([0, 1]))
+# 1. both empty
+assert_solution(to_list_node([]),
+                to_list_node([]),
+                to_list_node([]))
 
-# --- extra coverage ---------------------------------------------------------
-# 8. duplicates inside each list, equal length
-assert_solution(to_list_node([2, 2]),          to_list_node([3, 3]),          to_list_node([2, 3, 2, 3]))
+# 2. first empty, second size 1
+assert_solution(to_list_node([]),
+                to_list_node([0]),
+                to_list_node([0]))
 
-# 9. mix of negatives and positives, equal length
-assert_solution(to_list_node([-3, -1, 0]),     to_list_node([1, 2, 3]),       to_list_node([-3, 1, -1, 2, 0, 3]))
+# 3. second empty, first size 1
+assert_solution(to_list_node([0]),
+                to_list_node([]),
+                to_list_node([0]))
 
-# 10. all-negative inputs, first list longer
-assert_solution(to_list_node([-100, -50, -50]),to_list_node([-99, -49]),      to_list_node([-100, -99, -50, -49, -50]))
+# 4. fully interleaved ranges of equal length
+assert_solution(to_list_node([1, 3, 5]),
+                to_list_node([2, 4, 6]),
+                to_list_node([1, 2, 3, 4, 5, 6]))
 
-# 11. many duplicates across both lists, first list longer by one
-assert_solution(to_list_node([1, 2, 2, 3]),    to_list_node([2, 2, 4]),       to_list_node([1, 2, 2, 2, 2, 4, 3]))
+# 5. all elements of list 1 precede those of list 2
+assert_solution(to_list_node([1, 2, 3]),
+                to_list_node([4, 5, 6]),
+                to_list_node([1, 2, 3, 4, 5, 6]))
 
-# 12. extreme values at both ends of the range
-assert_solution(to_list_node([-100, -99, 0]),  to_list_node([100]),           to_list_node([-100, 100, -99, 0]))
+# 6. all elements of list 2 precede those of list 1
+assert_solution(to_list_node([4, 5, 6]),
+                to_list_node([1, 2, 3]),
+                to_list_node([1, 2, 3, 4, 5, 6]))
 
-# 13. maximum length on each side (50 + 50)
-assert_solution(
-    to_list_node(list(range(0, 100, 2))),      # 0, 2, …, 98
-    to_list_node(list(range(1, 101, 2))),      # 1, 3, …, 99
-    to_list_node(list(range(0, 100)))          # 0, 1, 2, …, 99
-)
+# 7. duplicates across the two lists
+assert_solution(to_list_node([1, 2, 4]),
+                to_list_node([1, 3, 4]),
+                to_list_node([1, 1, 2, 3, 4, 4]))
 
-# 14. first list at max length, second list empty
-assert_solution(
-    to_list_node(list(range(0, 100, 2))),
-    to_list_node([]),
-    to_list_node(list(range(0, 100, 2)))
-)
+# 8. duplicates within each list
+assert_solution(to_list_node([1, 1, 1]),
+                to_list_node([1, 1]),
+                to_list_node([1, 1, 1, 1, 1]))
 
-# 15. first list empty, second list at max length
-assert_solution(
-    to_list_node([]),
-    to_list_node(list(range(-100, -50))),       # -100 … -51 (50 items)
-    to_list_node(list(range(-100, -50)))
-)
+# 9. mix of negatives and positives
+assert_solution(to_list_node([-3, -1, 2, 4]),
+                to_list_node([-2, 2, 3]),
+                to_list_node([-3, -2, -1, 2, 2, 3, 4]))
 
-assert_solution(to_list_node([2,5,7]), to_list_node([1,3,6,8]), to_list_node([1,2,3,5,6,7,8]))
+# 10. extremes and repeated mid-range value
+assert_solution(to_list_node([-100, -50, -10]),
+                to_list_node([-99, -50]),
+                to_list_node([-100, -99, -50, -50, -10]))
+
+# 11. single identical element in each list
+assert_solution(to_list_node([0]),
+                to_list_node([0]),
+                to_list_node([0, 0]))
+
+# 12. list 1 at maximum allowed length (50), list 2 empty
+assert_solution(to_list_node(list(range(0, 100, 2))),      # 0, 2, … , 98
+                to_list_node([]),
+                to_list_node(list(range(0, 100, 2))))
+
+# 13. list 2 at maximum length, list 1 empty (all negative odd numbers)
+assert_solution(to_list_node([]),
+                to_list_node(list(range(-99, 1, 2))),       # –99, –97, … , –1
+                to_list_node(list(range(-99, 1, 2))))
+
+# 14. both lists at maximum length (evens then odds)
+assert_solution(to_list_node(list(range(0, 100, 2))),      # 50 even numbers
+                to_list_node(list(range(1, 101, 2))),       # 50 odd numbers
+                to_list_node(list(range(0, 100))))          # 0 … 100
+
+# 15. heavy duplication at extremes
+assert_solution(to_list_node([-100, -100, 100]),
+                to_list_node([-100, 100, 100]),
+                to_list_node([-100, -100, -100, 100, 100, 100]))
