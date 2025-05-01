@@ -6,6 +6,21 @@ class Solution(object):
         :type digits: List[int]
         :rtype: List[int]
         """
+
+        length = len(digits)
+        all_nines = True
+
+        for i in range(length):
+            if digits[i] != 9:
+                all_nines = False
+                break
+        
+        if all_nines:
+            digits.insert(0,1)
+            for i in range(length):
+                digits[i+1] = 0
+            
+            return digits
         
         for i in range(len(digits) - 1, -1, -1):
             if digits[i] != 9:
@@ -17,10 +32,6 @@ class Solution(object):
             elif (i == 0) and digits[i] == 9:
                 digits[i] = 0
                 digits.insert(0,1)
-                return digits
-            elif digits[i] == 9:
-                digits[i] = 0
-                digits[i-1] += 1
                 return digits
 
         raise ValueError("Shouldn't get here")
