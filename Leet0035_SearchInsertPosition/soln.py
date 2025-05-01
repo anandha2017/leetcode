@@ -23,7 +23,7 @@ def assert_solution(nums: List[int], target: int, expected_output: int):
     nums_copy = list(nums)                  # avoid mutating the original
     target_copy = target                    # avoid mutating the original
 
-    output = solution.searchInsert(nums, target_copy)
+    output = solution.searchInsert(nums_copy, target_copy)
    
     assert_pass = output == expected_output
 
