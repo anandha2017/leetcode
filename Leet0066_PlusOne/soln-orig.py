@@ -8,25 +8,31 @@ class Solution(object):
         """
 
         length = len(digits)
-        nine_counter = digits.count(9)
- 
-        if nine_counter == 0:
-            digits[length-1] += 1
-            return digits
+        all_nines = True
 
-        if length == nine_counter:
+        for i in range(length):
+            if digits[i] != 9:
+                all_nines = False
+                break
+        
+        if all_nines:
             digits.insert(0,1)
             for i in range(length):
                 digits[i+1] = 0
             
             return digits
-
-        for i in range(length - 1, -1, -1):
+        
+        for i in range(len(digits) - 1, -1, -1):
             if digits[i] != 9:
                 digits[i] += 1
                 return digits
-            else:
+            elif (i == 0) and digits[i] != 9:
+                digits[i] += 1
+                return digits
+            elif (i == 0) and digits[i] == 9:
                 digits[i] = 0
+                digits.insert(0,1)
+                return digits
 
         raise ValueError("Shouldn't get here")
     
@@ -60,7 +66,7 @@ assert_solution([1], [2])
 assert_solution([8], [9])
 
 # Cases with consecutive 9s at the end
-# assert_solution([1, 9], [2, 0])
+assert_solution([1, 9], [2, 0])
 assert_solution([9, 9], [1, 0, 0])
 assert_solution([1, 9, 9], [2, 0, 0])
 assert_solution([9, 9, 9], [1, 0, 0, 0])
