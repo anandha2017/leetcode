@@ -8,13 +8,32 @@ class ListNode:
 
 class Solution:
     def deleteDuplicates(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        """Given the `head` of a sorted linked list, delete all duplicates
+            such that each element appears only once. Return the linked list
+            sorted as well."""
 
-        return ListNode(0)
+        sentinel = ListNode(0)
+        current = sentinel
+        source = head
+
+        while source:
+            if source.next:
+                if source.val != source.next.val:
+                    current.next = ListNode(source.val)
+                    current = current.next
+
+            if source.next is None:
+                current.next = ListNode(source.val)
+
+            source = source.next
+
+        return sentinel.next
 
 solution = Solution()
 
 # Define some formatting constants
 SEPARATOR = "=" * 50
+TRUNC = 20
 PASS_FORMAT = "\033[92m{}\033[0m"  # Green text
 FAIL_FORMAT = "\033[91m{}\033[0m"  # Red text
 
@@ -45,8 +64,7 @@ def deep_copy_linked_list(head: Optional[ListNode]) -> Optional[ListNode]:
     return sentinel.next
 
 def compare_linked_lists(list1: Optional[ListNode], list2: Optional[ListNode]) -> bool:
-    """
-    Compare two linked lists to check if they contain the same values in the same order."""
+    """Compare two linked lists to check if they contain the same values in the same order."""
 
     current1 = list1
     current2 = list2
@@ -62,9 +80,6 @@ def compare_linked_lists(list1: Optional[ListNode], list2: Optional[ListNode]) -
     # Otherwise, one list is longer than the other
     return current1 is None and current2 is None
 
-def print_list_node(list1: Optional[ListNode]):
-    print (linked_list_to_array(list1))
-
 def linked_list_to_array(head: Optional[ListNode]) -> list:
     """Convert a linked list to an array for easier visualization."""
     result = []
@@ -73,6 +88,12 @@ def linked_list_to_array(head: Optional[ListNode]) -> list:
         result.append(current.val)
         current = current.next
     return result
+
+def truncate_str(s: str, max_length: int = TRUNC) -> str:
+    """Truncate a string to max_length characters, adding '...' if truncated."""
+    if len(s) <= max_length:
+        return s
+    return s[:max_length-3] + "..."
 
 def assert_solution(input_list: Optional[ListNode], expected: Optional[ListNode]):
     """Test solution with given input and expected output."""
@@ -85,16 +106,46 @@ def assert_solution(input_list: Optional[ListNode], expected: Optional[ListNode]
 
     print(
         f"{formatted_result}: "
-        f"Input: {linked_list_to_array(input_list)}, "
-        f"Expected: {linked_list_to_array(expected)}"
-        f"{' , Got: ' + str(linked_list_to_array(output)) if not assert_pass else ''}"
+        f"Input: {truncate_str(str(linked_list_to_array(input_list)))}, "
+        f"Expected: {truncate_str(str(linked_list_to_array(expected)))}"
+        f"{' , Got: ' + truncate_str(str(linked_list_to_array(output))) if not assert_pass else ''}"
     )
 
     return assert_pass
 
-
-
-
 # Provided examples
 assert_solution(create_linked_list([1,1,2]), create_linked_list([1,2]))
 assert_solution(create_linked_list([1,1,2,3,3]), create_linked_list([1,2,3]))
+
+# Edge cases
+assert_solution(create_linked_list([]), create_linked_list([]))
+assert_solution(create_linked_list([5]), create_linked_list([5]))
+assert_solution(create_linked_list([1,1,1,1,1]), create_linked_list([1]))
+assert_solution(create_linked_list([1,2,3,4,5]), create_linked_list([1,2,3,4,5]))
+
+# Boundary value tests
+assert_solution(create_linked_list([-100,-100,-50]), create_linked_list([-100,-50]))
+assert_solution(create_linked_list([50,100,100]), create_linked_list([50,100]))
+assert_solution(create_linked_list([-100,-100,0,100,100]), create_linked_list([-100,0,100]))
+assert_solution(create_linked_list([0,0,0]), create_linked_list([0]))
+
+# Complex patterns
+assert_solution(create_linked_list([1,1,2,2,3,3,4,4]), create_linked_list([1,2,3,4]))
+assert_solution(create_linked_list([1,1,1,2,2,3,4,4,4,4]), create_linked_list([1,2,3,4]))
+assert_solution(create_linked_list([-10,-10,-5,0,0,5,10,10]), create_linked_list([-10,-5,0,5,10]))
+
+# Long sequence test
+long_sequence = list(range(-100, 101))
+long_sequence_with_duplicates = []
+for val in long_sequence:
+    long_sequence_with_duplicates.extend([val, val])  # Add each value twice
+assert_solution(create_linked_list(long_sequence_with_duplicates), create_linked_list(long_sequence))
+
+# Mixed pattern test
+mixed_test = []
+for i in range(-50, 51, 10):
+    # Add each value i times (creating variable numbers of duplicates)
+    count = abs(i) % 5 + 1  # 1 to 5 duplicates
+    mixed_test.extend([i] * count)
+expected_mixed = list(range(-50, 51, 10))
+assert_solution(create_linked_list(mixed_test), create_linked_list(expected_mixed))
