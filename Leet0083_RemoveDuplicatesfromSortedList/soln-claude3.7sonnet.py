@@ -12,22 +12,18 @@ class Solution:
             such that each element appears only once. Return the linked list
             sorted as well."""
 
-        sentinel = ListNode(0)
-        current = sentinel
-        source = head
+        current = head
 
-        while source:
-            if source.next:
-                if source.val != source.next.val:
-                    current.next = ListNode(source.val)
-                    current = current.next
+        while current and current.next:
+            if current.val == current.next.val:
+                # Skip the duplicate
+                current.next = current.next.next
+            else:
+                # Move to next node
+                current = current.next
 
-            if source.next is None:
-                current.next = ListNode(source.val)
+        return head
 
-            source = source.next
-
-        return sentinel.next
 
 solution = Solution()
 
