@@ -13,21 +13,13 @@ class Solution:
 
 solution = Solution()
 
+# Define some formatting constants
+SEPARATOR = "=" * 50
+PASS_FORMAT = "\033[92m{}\033[0m"  # Green text
+FAIL_FORMAT = "\033[91m{}\033[0m"  # Red text
+
 def create_linked_list(values: list[int]) -> Optional[ListNode]:
-    """
-    Convert a list of integers to a linked list.
-
-    Args:
-        values: A list of integers to convert into a linked list.
-                Can be empty, which will return None.
-
-    Returns:
-        The head of the newly created linked list, or None if the input list is empty.
-
-    Example:
-        >>> to_list_node([1, 2, 3])
-        # Returns a linked list: 1 -> 2 -> 3 -> None
-    """
+    """Convert a list of integers to a linked list."""
 
     sentinel = ListNode(0)          # temporary first link
     current = sentinel
@@ -39,21 +31,7 @@ def create_linked_list(values: list[int]) -> Optional[ListNode]:
     return sentinel.next            # real head, or None if list was empty
 
 def deep_copy_linked_list(head: Optional[ListNode]) -> Optional[ListNode]:
-    """
-    Create a deep copy of a linked list.
-
-    Args:
-        list1: The head of the linked list to copy.
-              Can be None, which will return None.
-
-    Returns:
-        A new linked list with the same values as the original,
-        or None if the input list is None.
-
-    Note:
-        This performs a deep copy - the new list contains new nodes
-        with the same values, not references to the original nodes.
-    """
+    """Create a deep copy of a linked list."""
 
     sentinel = ListNode(0)
     current = sentinel
@@ -68,24 +46,7 @@ def deep_copy_linked_list(head: Optional[ListNode]) -> Optional[ListNode]:
 
 def compare_linked_lists(list1: Optional[ListNode], list2: Optional[ListNode]) -> bool:
     """
-    Compare two linked lists to check if they contain the same values in the same order.
-
-    Args:
-        list1: Head of the first linked list
-        list2: Head of the second linked list
-
-    Returns:
-        True if both lists have identical values in the same order and same length,
-        False otherwise
-
-    Examples:
-        >>> are_contents_the_same(to_list_node([1, 2, 3]), to_list_node([1, 2, 3]))
-        True
-        >>> are_contents_the_same(to_list_node([1, 2]), to_list_node([1, 2, 3]))
-        False
-        >>> are_contents_the_same(to_list_node([1, 2, 3]), to_list_node([1, 3, 2]))
-        False
-    """
+    Compare two linked lists to check if they contain the same values in the same order."""
 
     current1 = list1
     current2 = list2
@@ -102,48 +63,37 @@ def compare_linked_lists(list1: Optional[ListNode], list2: Optional[ListNode]) -
     return current1 is None and current2 is None
 
 def print_list_node(list1: Optional[ListNode]):
+    print (linked_list_to_array(list1))
 
-    print(f"list: {list1}")
-    while list1:
-        print(f"val:  {list1.val}")
-        list1 = list1.next
-
+def linked_list_to_array(head: Optional[ListNode]) -> list:
+    """Convert a linked list to an array for easier visualization."""
+    result = []
+    current = head
+    while current:
+        result.append(current.val)
+        current = current.next
+    return result
 
 def assert_solution(input_list: Optional[ListNode], expected: Optional[ListNode]):
-    """
-    Test the deleteDuplicates solution against expected output.
-
-    Args:
-        input_list: Input linked list to be processed
-        expected: Expected result after removing duplicates
-
-    Prints:
-        PASS/FAIL status and details on failure
-    """
-
-
+    """Test solution with given input and expected output."""
     input_copy = deep_copy_linked_list(input_list)
     output = solution.deleteDuplicates(input_copy)
     assert_pass = compare_linked_lists(output, expected)
 
-    print(f"{'PASS' if assert_pass else 'FAIL'}")
+    result = "PASS" if assert_pass else "FAIL"
+    formatted_result = PASS_FORMAT.format(result) if assert_pass else FAIL_FORMAT.format(result)
 
-    if not assert_pass:
-        separator = "-" * 40
-        print(separator)
-        print(separator)
-        print("FAILURE DETAILS:")
-        print(separator)
-        print("Input:")
-        print_list_node(input_list)
-        print(separator)
-        print("Expected Output:")
-        print_list_node(expected)
-        print(separator)
-        print("Actual Output:")
-        print_list_node(output)
+    print(
+        f"{formatted_result}: "
+        f"Input: {linked_list_to_array(input_list)}, "
+        f"Expected: {linked_list_to_array(expected)}"
+        f"{' , Got: ' + str(linked_list_to_array(output)) if not assert_pass else ''}"
+    )
 
     return assert_pass
+
+
+
 
 # Provided examples
 assert_solution(create_linked_list([1,1,2]), create_linked_list([1,2]))
