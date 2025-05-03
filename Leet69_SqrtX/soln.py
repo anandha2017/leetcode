@@ -1,6 +1,6 @@
 class Solution:
     def mySqrt(self, x: int) -> int:
-        
+
         """
         :type x: int
         :rtype: int
@@ -45,7 +45,6 @@ def assert_solution(i: int, expected_output: int):
 
     assert_pass = output == expected_output
 
-    # Enhanced print statement that shows only first 10 elements if nums_copy is longer than 10
     print(
         f"{'PASS' if assert_pass else 'FAIL'} — "
         f"Output: {output}, Expected: {expected_output}, "
