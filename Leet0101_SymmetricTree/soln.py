@@ -11,7 +11,29 @@ class TreeNode:
 class Solution:
     def isSymmetric(self, root: Optional[TreeNode]) -> bool:
 
-        return False
+        if root is None:
+            return True
+
+        return self.mirroCheck(root.left, root.right)
+
+    def mirroCheck(self, leftnode: Optional[TreeNode], rightnode: Optional[TreeNode],) -> bool:
+        if leftnode is None and rightnode is None:
+            return True
+
+        if leftnode is None and rightnode is not None:
+            return False
+
+        if leftnode is not None and rightnode is None:
+            return False
+
+        if leftnode.val != rightnode.val:
+            return False
+
+        return (
+            self.mirroCheck(leftnode.left, rightnode.right) and
+            self.mirroCheck(leftnode.right, rightnode.left)
+        )
+
 
 solution = Solution()
 
@@ -82,5 +104,40 @@ def assert_solution(input_list: List[int],  expected: bool):
 
     return assert_pass
 
+# Test cases for Symmetric Tree (LeetCode Problem 101)
+
+# Test examples from the problem description
 assert_solution([1,2,2,3,4,4,3], True)
-assert_solution([1,2,2,NULL,3,NULL,3], False)
+assert_solution([1,2,2,None,3,None,3], False)
+
+# Additional examples from the README
+assert_solution([5,1,1,2,3,3,2], True)
+assert_solution([5,1,1,2,None,None,2], True)
+assert_solution([4,7,7,9,None,None,9,1,3,None,None,None,None,3,1], True)
+assert_solution([4,7,7,9,None,None,9,1,3,None,None,None,None,1,3], False)
+
+# Edge cases
+assert_solution([1], True)  # Single node is always symmetric
+assert_solution([], True)  # Empty tree is symmetric
+assert_solution([1,2,3], False)  # Different values in left and right subtrees
+assert_solution([1,2,2,2,None,2,None], False)  # Structurally different left and right subtrees
+assert_solution([1,2,2,None,3,3,None], True)  # Symmetric with missing leaves
+assert_solution([1,2,2,3,None,None,3], True)  # Symmetric with missing inner nodes
+
+# More complex examples
+assert_solution([1,2,2,3,4,4,3,5,6,7,8,8,7,6,5], True)  # Deeply nested symmetric tree
+assert_solution([1,2,2,3,4,4,3,5,6,7,8,8,7,6,9], False)  # Deep tree with asymmetry at leaf level
+assert_solution([1,2,2,None,3,3,None,4,5,5,4], False)  # Irregular but symmetric tree
+assert_solution([1,2,2,None,3,4,None,None,None,5,None,6,None,None,7], False)  # Complex asymmetric structure
+
+# Testing with negative values
+assert_solution([0,-8,-8,7,9,9,7], True)  # Symmetric tree with negative values
+assert_solution([0,-8,-8,7,9,7,9], False)  # Asymmetric tree with negative values
+
+# Testing with repeated values but different structure
+assert_solution([1,1,1,1,1,1,1], True)  # All values same, symmetric structure
+assert_solution([1,1,1,1,1,None,1], False)  # All values same, asymmetric structure
+
+# Testing larger values within constraints
+assert_solution([100,42,42,-100,-100,-100,-100], True)  # Values at constraint boundaries, symmetric
+assert_solution([100,42,42,-100,99,99,-100], True)  # Large values, symmetric
