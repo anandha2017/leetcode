@@ -23,6 +23,8 @@ class Solution:
         o.append(root.val)
         self.traverseInorder(root.right, o)
 
+        return
+
 
 solution = Solution()
 
