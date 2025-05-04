@@ -16,7 +16,7 @@ class Solution:
 solution = Solution()
 
 # Define some formatting constants
-TRUNC = 1000
+TRUNC = 50
 NULL = -999
 PASS_FORMAT = "\033[92m{}\033[0m"  # Green text
 FAIL_FORMAT = "\033[91m{}\033[0m"  # Red text
