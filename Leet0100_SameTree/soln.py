@@ -11,17 +11,29 @@ class TreeNode:
 class Solution:
     def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
 
-        if p is None and q is None:
-            return True
-
         return self.traverseInorder(p, q)
 
     def traverseInorder(self, root_p: Optional[TreeNode], root_q: Optional[TreeNode],) -> bool:
 
-        if root_p and root_p.val == root_q and root_q.val:
+        if root_p is None and root_q is None:
             return True
 
-        return self.traverseInorder(root_p.left, root_q.left) and self.traverseInorder(root_p.right, root_q.right)
+        if root_p is None and root_q is not(None):
+            return False
+
+        if root_q is None and root_p is not(None):
+            return False
+
+        node_value_is_the_same = False
+        if root_p.val == root_q.val:
+            node_value_is_the_same = True
+
+        return (
+            node_value_is_the_same
+            and self.traverseInorder(root_p.left, root_q.left)
+            and self.traverseInorder(root_p.right, root_q.right)
+        )
+
 
 
 solution = Solution()
