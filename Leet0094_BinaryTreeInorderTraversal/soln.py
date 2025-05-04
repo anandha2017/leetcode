@@ -12,24 +12,22 @@ class Solution:
     def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
 
         output = []
-        output = self.LNR(root, output)
+        self.traverseInorder(root, output)
         return output
 
-    def LNR(self, root: Optional[TreeNode], o: List[int]) -> List[int]:
+    def traverseInorder(self, root: Optional[TreeNode], o: List[int]) -> None:
         if root is None:
-            return o
+            return
 
-        self.LNR(root.left, o)
+        self.traverseInorder(root.left, o)
         o.append(root.val)
-        self.LNR(root.right, o)
-
-        return o
+        self.traverseInorder(root.right, o)
 
 
 solution = Solution()
 
 # Define some formatting constants
-TRUNC = 30
+TRUNC = 1000
 NULL = -999
 PASS_FORMAT = "\033[92m{}\033[0m"  # Green text
 FAIL_FORMAT = "\033[91m{}\033[0m"  # Red text
@@ -129,7 +127,7 @@ assert_solution([0, -100, 100], [-100, 0, 100])
 assert_solution([8, 3, 10, 1, 6, NULL, 14, NULL, NULL, 4, 7, 13], [1, 3, 4, 6, 7, 8, 10, 13, 14])
 
 # Deep tree - testing nested structure
-assert_solution([5, 4, 8, 11, NULL, 13, 4, 7, 2, NULL, NULL, NULL, 1], [7, 11, 2, 4, 5, 13, 8, 1, 4])
+assert_solution([5, 4, 8, 11, NULL, 13, 4, 7, 2, NULL, NULL, NULL, 1], [7, 11, 2, 4, 5, 13, 8, 4, 1])
 
 # Unbalanced tree with multiple levels
 assert_solution([10, 5, 15, 3, 7, NULL, 20, NULL, NULL, 6, 8], [3, 5, 6, 7, 8, 10, 15, 20])
