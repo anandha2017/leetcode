@@ -7,7 +7,27 @@ public class soln {
     class Solution {
 
         public TreeNode sortedArrayToBST(int[] nums) {
-            // I will solve this later, do not give me a solution
+
+            if (nums.length == 0) {
+                return null;
+            }
+
+            if (nums.length == 1) {
+                return new TreeNode(nums[0]);
+            }
+
+            if (nums.length == 2) {
+                TreeNode root = new TreeNode(nums[0]);
+                if (nums[0] < nums[1]) {
+                    root.right = new TreeNode(nums[1]);
+                } else {
+                    root.left = new TreeNode(nums[1]);
+                }
+                return root;
+            }
+
+//            boolean isOdd = (nums.length & 1) == 1;
+
             return new TreeNode(nums[0]);
         }
     }
@@ -63,6 +83,29 @@ public class soln {
         }
 
         return root;
+    }
+
+    private static Boolean isSameTree(TreeNode p, TreeNode q) {
+
+        if ((p == null) && (q == null)) {
+            return true;
+        }
+
+        if ((p == null) && (q != null)) {
+            return false;
+        }
+
+        if ((p != null) && (q == null)) {
+            return false;
+        }
+
+        if (p.val != q.val) {
+            return false;
+        }
+
+        return (
+            isSameTree(p.left, q.left) &&
+            isSameTree(p.right, q.right));
     }
 
     private static String treeToString(TreeNode root) {
@@ -132,7 +175,7 @@ public class soln {
 
         TreeNode output = solution.sortedArrayToBST(inputList);
 
-        boolean assertPass = output == expected;
+        boolean assertPass = isSameTree(output, expected);
 
         String result = assertPass ? "PASS" : "FAIL";
         String formattedResult = assertPass ? greenText(result) : redText(result);
@@ -150,6 +193,7 @@ public class soln {
     }
 
     public static void main(String[] args) {
+        assertSolution(new int[] { 1, 3 }, createBinaryTree(new Integer[] { 1, null, 3 }));
         assertSolution(new int[] { -10, -3, 0, 5, 9 }, createBinaryTree(new Integer[] { 0, -3, 9, -10, null, 5 }));
     }
 }
