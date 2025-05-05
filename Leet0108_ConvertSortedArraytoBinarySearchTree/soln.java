@@ -1,17 +1,14 @@
+package Leet0108_ConvertSortedArraytoBinarySearchTree;
+
 import java.util.Arrays;
 
 public class soln {
 
     class Solution {
-        public int maxDepth(TreeNode root) {
 
-            if (root == null) {
-                return 0;
-            }
-
-            return 1 + Math.max(
-                    maxDepth(root.left),
-                    maxDepth(root.right));
+        public TreeNode sortedArrayToBST(int[] nums) {
+            // I will solve this later, do not give me a solution
+            return new TreeNode(nums[0]);
         }
     }
 
@@ -68,30 +65,29 @@ public class soln {
         return root;
     }
 
-    private static void printTree(TreeNode root) {
+    private static String treeToString(TreeNode root) {
         if (root == null) {
-            System.out.println("Empty tree");
-            return;
+            return "Empty tree";
         }
 
+        StringBuilder result = new StringBuilder();
         // Use a queue for level-order traversal
         java.util.Queue<TreeNode> queue = new java.util.LinkedList<>();
         queue.add(root);
 
-        System.out.println("Tree structure:");
         int level = 0;
 
         while (!queue.isEmpty()) {
             int levelSize = queue.size();
-            System.out.print("Level " + (level + 1) + ": ");
+            result.append("Level ").append(level + 1).append(": ");
 
             for (int i = 0; i < levelSize; i++) {
                 TreeNode node = queue.poll();
 
                 if (node == null) {
-                    System.out.print("null ");
+                    result.append("null ");
                 } else {
-                    System.out.print(node.val + " ");
+                    result.append(node.val).append(" ");
 
                     // Add children to queue (including nulls for visualization)
                     queue.add(node.left);
@@ -99,7 +95,7 @@ public class soln {
                 }
             }
 
-            System.out.println();
+            result.append("\n");
             level++;
 
             // Check if the next level has only nulls
@@ -115,6 +111,8 @@ public class soln {
                 break;
             }
         }
+
+        return result.toString();
     }
 
     private static String truncateStr(String s, int maxLength) {
@@ -128,62 +126,30 @@ public class soln {
         return truncateStr(s, MAX_STRING_LENGTH);
     }
 
-    private static boolean assertSolution(Integer[] inputList, int expected) {
+    private static boolean assertSolution(int[] inputList, TreeNode expected) {
         soln outer = new soln();
         Solution solution = outer.new Solution();
 
-        TreeNode root = createBinaryTree(inputList);
-
-        int output = solution.maxDepth(root);
+        TreeNode output = solution.sortedArrayToBST(inputList);
 
         boolean assertPass = output == expected;
 
         String result = assertPass ? "PASS" : "FAIL";
         String formattedResult = assertPass ? greenText(result) : redText(result);
 
-        System.out.println(
-                formattedResult + ": " +
-                        "Input: " + truncateStr(Arrays.toString(inputList)) + ", " +
-                        "Expected: " + expected +
-                        (assertPass ? "" : ", Got: " + output));
+        System.out.println(formattedResult + ": Input: " + truncateStr(Arrays.toString(inputList)));
+        System.out.println("\n\t=== EXPECTED TREE ===");
+        System.out.println(treeToString(expected));
 
         if (!assertPass) {
-            printTree(root);
+            System.out.println("\n\t=== ACTUAL TREE ===");
+            System.out.println(treeToString(output));
         }
 
         return assertPass;
     }
 
     public static void main(String[] args) {
-        // Base cases
-        assertSolution(new Integer[] {}, 0); // Empty tree
-        assertSolution(new Integer[] { 1 }, 1); // Single node tree
-
-        // Basic cases with different depths
-        assertSolution(new Integer[] { 1, 2 }, 2); // Root with left child
-        assertSolution(new Integer[] { 1, null, 2 }, 2); // Root with right child
-        assertSolution(new Integer[] { 1, 2, 3 }, 2); // Full tree of depth 2
-        assertSolution(new Integer[] { 3, 9, 20, null, null, 15, 7 }, 3); // Example from problem
-
-        // Left-skewed trees
-        assertSolution(new Integer[] { 1, 2, null, 3 }, 3); // Left-skewed depth 3
-        assertSolution(new Integer[] { 1, 2, null, 3, null, 4 }, 4); // Left-skewed depth 4
-
-        // Right-skewed trees
-        assertSolution(new Integer[] { 1, null, 2, null, 3 }, 3); // Right-skewed depth 3
-        assertSolution(new Integer[] { 1, null, 2, null, null, null, 3 }, 2); // Right-skewed with gaps
-
-        // Balanced trees
-        assertSolution(new Integer[] { 1, 2, 3, 4, 5, 6, 7 }, 3); // Perfect binary tree depth 3
-        assertSolution(new Integer[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 }, 4); // Partial depth 4
-
-        // Unbalanced trees
-        assertSolution(new Integer[] { 1, 2, null, 3, 4 }, 3); // Deeper on left branch
-        assertSolution(new Integer[] { 1, null, 2, 3, 4 }, 3); // Deeper on right branch
-        assertSolution(new Integer[] { 5, 4, 7, 3, null, 2, null, null, null, 9 }, 4); // Complex tree
-
-        // Trees with specific patterns
-        assertSolution(new Integer[] { 1, null, 2, 3, null, null, 4 }, 4); // Tree with zigzag pattern
-        assertSolution(new Integer[] { 5, 3, 6, 2, 4, null, null, 1 }, 4); // BST-like structure
+        assertSolution(new int[] { -10, -3, 0, 5, 9 }, createBinaryTree(new Integer[] { 0, -3, 9, -10, null, 5 }));
     }
 }
