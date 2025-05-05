@@ -5,8 +5,13 @@ public class soln {
     class Solution {
         public int maxDepth(TreeNode root) {
 
-            // implement later
-            return 0;
+            if (root == null) {
+                return 0;
+            }
+
+            return 1 + Math.max(
+                    maxDepth(root.left),
+                    maxDepth(root.right));
         }
     }
 
@@ -69,26 +74,48 @@ public class soln {
 
         // Format the result string with colors using our helper methods
         String result = assertPass ? "PASS" : "FAIL";
-        String formattedResult = assertPass ? greenText(result) :
-                redText(result);
+        String formattedResult = assertPass ? greenText(result) : redText(result);
 
         // Print the test result
         System.out.println(
                 formattedResult + ": " +
                         "Input: " + truncateStr(Arrays.toString(inputList)) + ", " +
                         "Expected: " + expected +
-                        (assertPass ? "" : ", Got: " + output)
-        );
+                        (assertPass ? "" : ", Got: " + output));
 
         return assertPass;
     }
 
     public static void main(String[] args) {
-        // Test cases for Maximum Depth of Binary Tree
-        assertSolution(new Integer[] { 3, 9, 20, null, null, 15, 7 }, 3);
-        assertSolution(new Integer[] { 1, null, 2 }, 2);
-        assertSolution(new Integer[] {}, 0);
-        // Add more test cases as needed
-    }
+        // Base cases
+        assertSolution(new Integer[] {}, 0); // Empty tree
+        assertSolution(new Integer[] { 1 }, 1); // Single node tree
 
+        // Basic cases with different depths
+        assertSolution(new Integer[] { 1, 2 }, 2); // Root with left child
+        assertSolution(new Integer[] { 1, null, 2 }, 2); // Root with right child
+        assertSolution(new Integer[] { 1, 2, 3 }, 2); // Full tree of depth 2
+        assertSolution(new Integer[] { 3, 9, 20, null, null, 15, 7 }, 3); // Example from problem
+
+        // Left-skewed trees
+        assertSolution(new Integer[] { 1, 2, null, 3 }, 3); // Left-skewed depth 3
+        assertSolution(new Integer[] { 1, 2, null, 3, null, 4 }, 4); // Left-skewed depth 4
+
+        // Right-skewed trees
+        assertSolution(new Integer[] { 1, null, 2, null, 3 }, 3); // Right-skewed depth 3
+        assertSolution(new Integer[] { 1, null, 2, null, null, null, 3 }, 3); // Right-skewed with gaps
+
+        // Balanced trees
+        assertSolution(new Integer[] { 1, 2, 3, 4, 5, 6, 7 }, 3); // Perfect binary tree depth 3
+        assertSolution(new Integer[] { 1, 2, 3, 4, 5, 6, 7, 8, 9 }, 4); // Partial depth 4
+
+        // Unbalanced trees
+        assertSolution(new Integer[] { 1, 2, null, 3, 4 }, 3); // Deeper on left branch
+        assertSolution(new Integer[] { 1, null, 2, 3, 4 }, 3); // Deeper on right branch
+        assertSolution(new Integer[] { 5, 4, 7, 3, null, 2, null, null, null, 9 }, 4); // Complex tree
+
+        // Trees with specific patterns
+        assertSolution(new Integer[] { 1, null, 2, 3, null, null, 4 }, 3); // Tree with zigzag pattern
+        assertSolution(new Integer[] { 5, 3, 6, 2, 4, null, null, 1 }, 4); // BST-like structure
+    }
 }
