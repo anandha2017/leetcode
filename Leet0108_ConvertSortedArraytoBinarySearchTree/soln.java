@@ -8,43 +8,41 @@ public class soln {
 
         public TreeNode sortedArrayToBST(int[] nums) {
 
-            if (nums.length == 0) {
+            return helper(nums, 0, nums.length - 1);
+
+            /*
+             * FUNCTION buildBST(sortedArray):
+             * RETURN helper(sortedArray, 0, length(sortedArray) - 1)
+             *
+             * FUNCTION helper(arr, leftIndex, rightIndex):
+             * IF leftIndex > rightIndex:
+             * RETURN null // empty sub‑array ➜ empty child
+             *
+             * midIndex ← (leftIndex + rightIndex) / 2 // integer division
+             *
+             * node ← new TreeNode(arr[midIndex]) // create root for this segment
+             *
+             * node.left ← helper(arr, leftIndex, midIndex - 1) // build left subtree
+             * node.right ← helper(arr, midIndex + 1, rightIndex) // build right subtree
+             *
+             * RETURN node
+             */
+
+        }
+
+        private static final TreeNode helper(int[] arr, int leftIndex, int rightIndex) {
+            if (leftIndex > rightIndex) {
                 return null;
             }
 
-            if (nums.length == 1) {
-                return new TreeNode(nums[0]);
-            }
+            int midIndex = (leftIndex + rightIndex) / 2;
 
-            if (nums.length == 2) {
-                TreeNode root = new TreeNode(nums[0]);
-                if (nums[0] < nums[1]) {
-                    root.right = new TreeNode(nums[1]);
-                } else {
-                    root.left = new TreeNode(nums[1]);
-                }
-                return root;
-            }
+            TreeNode node = new TreeNode(arr[midIndex]);
 
-            boolean isOdd = (nums.length & 1) == 1;
+            node.left = helper(arr, leftIndex, midIndex - 1);
+            node.right = helper(arr, midIndex + 1, rightIndex);
 
-            TreeNode root = null;
-
-            int midway = nums.length / 2;
-
-            if (isOdd) {
-                root = new TreeNode(nums[midway]);
-                int[] newArrayLeft = Arrays.copyOf(nums, midway);
-                int[] newArrayRight = Arrays.copyOfRange(nums, nums.length - midway, nums.length);
-                root.left = sortedArrayToBST(newArrayLeft);
-                root.right = sortedArrayToBST(newArrayRight);
-            } else {
-
-
-            }
-
-
-            return root;
+            return node;
         }
     }
 
@@ -119,9 +117,8 @@ public class soln {
             return false;
         }
 
-        return (
-            isSameTree(p.left, q.left) &&
-            isSameTree(p.right, q.right));
+        return (isSameTree(p.left, q.left) &&
+                isSameTree(p.right, q.right));
     }
 
     private static String treeToString(TreeNode root) {
@@ -211,7 +208,34 @@ public class soln {
     }
 
     public static void main(String[] args) {
-        assertSolution(new int[] { 1, 3 }, createBinaryTree(new Integer[] { 1, null, 3 }));
-        assertSolution(new int[] { -10, -3, 0, 5, 9 }, createBinaryTree(new Integer[] { 0, -3, 9, -10, null, 5 }));
+
+        /* 1 – Empty input → empty tree (null) */
+        assertSolution(new int[] {},
+                /* expected */ null);
+
+        /* 2 – Single element → single‑node tree */
+        assertSolution(new int[] { 7 },
+                createBinaryTree(new Integer[] { 7 }));
+
+        /* 3 – Two elements (even length) */
+        assertSolution(new int[] { 1, 3 },
+                createBinaryTree(new Integer[] { 1, null, 3 }));
+
+        /* 4 – Three elements (odd length, perfectly balanced) */
+        assertSolution(new int[] { 1, 2, 3 },
+                createBinaryTree(new Integer[] { 2, 1, 3 }));
+
+        /* 5 – Four elements (even length, skew on final level) */
+        assertSolution(new int[] { 1, 2, 3, 4 },
+                createBinaryTree(new Integer[] { 2, 1, 3, null, null, null, 4 }));
+
+        /* 6 – Five elements, mixed signs */
+        assertSolution(new int[] { -10, -3, 0, 5, 9 },
+                createBinaryTree(new Integer[] { 0, -3, 9, -10, null, 5 }));
+
+        /* 7 – Edge values of 32‑bit range */
+        assertSolution(new int[] { -2147483648, -1, 0, 1, 2147483647 },
+                createBinaryTree(new Integer[] { 0, -1, 1, -2147483648, null, null, 2147483647 }));
     }
+
 }
