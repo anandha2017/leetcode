@@ -26,9 +26,25 @@ public class soln {
                 return root;
             }
 
-//            boolean isOdd = (nums.length & 1) == 1;
+            boolean isOdd = (nums.length & 1) == 1;
 
-            return new TreeNode(nums[0]);
+            TreeNode root = null;
+
+            int midway = nums.length / 2;
+
+            if (isOdd) {
+                root = new TreeNode(nums[midway]);
+                int[] newArrayLeft = Arrays.copyOf(nums, midway);
+                int[] newArrayRight = Arrays.copyOfRange(nums, nums.length - midway, nums.length);
+                root.left = sortedArrayToBST(newArrayLeft);
+                root.right = sortedArrayToBST(newArrayRight);
+            } else {
+
+
+            }
+
+
+            return root;
         }
     }
 
@@ -181,13 +197,15 @@ public class soln {
         String formattedResult = assertPass ? greenText(result) : redText(result);
 
         System.out.println(formattedResult + ": Input: " + truncateStr(Arrays.toString(inputList)));
-        System.out.println("\n\t=== EXPECTED TREE ===");
+        System.out.println("\n=== EXPECTED TREE ===");
         System.out.println(treeToString(expected));
 
         if (!assertPass) {
-            System.out.println("\n\t=== ACTUAL TREE ===");
+            System.out.println("\n=== ACTUAL TREE ===");
             System.out.println(treeToString(output));
         }
+
+        System.out.println("==========================================");
 
         return assertPass;
     }
