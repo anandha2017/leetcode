@@ -15,7 +15,7 @@ public class soln {
         }
     }
 
-    private static final int TRUNC = 50;
+    private static final int MAX_STRING_LENGTH = 50;
     private static final String ANSI_RESET = "\u001B[0m";
     private static final String ANSI_GREEN = "\u001B[92m";
     private static final String ANSI_RED = "\u001B[91m";
@@ -29,25 +29,94 @@ public class soln {
     }
 
     private static TreeNode createBinaryTree(Integer[] values) {
-        if (values == null || values.length == 0) {
-            return null;
-        }
-        return createBinaryTree(values, 0);
-    }
-
-    private static TreeNode createBinaryTree(Integer[] values, int index) {
-        if (index >= values.length || values[index] == null) {
+        if (values == null || values.length == 0 || values[0] == null) {
             return null;
         }
 
-        TreeNode node = new TreeNode(values[index]);
-        node.left = createBinaryTree(values, 2 * index + 1);
-        node.right = createBinaryTree(values, 2 * index + 2);
+        // Create the root node
+        TreeNode root = new TreeNode(values[0]);
 
-        return node;
+        // Use a queue to keep track of nodes that need children
+        java.util.Queue<TreeNode> queue = new java.util.LinkedList<>();
+        queue.add(root);
+        int i = 1; // Start from the second element
+
+        // Process the rest of the values
+        while (!queue.isEmpty() && i < values.length) {
+            // Get the next node that needs children
+            TreeNode current = queue.poll();
+
+            // Assign left child if value is not null
+            if (i < values.length) {
+                if (values[i] != null) {
+                    current.left = new TreeNode(values[i]);
+                    queue.add(current.left);
+                }
+                i++;
+            }
+
+            // Assign right child if value is not null
+            if (i < values.length) {
+                if (values[i] != null) {
+                    current.right = new TreeNode(values[i]);
+                    queue.add(current.right);
+                }
+                i++;
+            }
+        }
+
+        return root;
     }
 
-    // Truncate a string to max_length characters, adding "..." if truncated
+    private static void printTree(TreeNode root) {
+        if (root == null) {
+            System.out.println("Empty tree");
+            return;
+        }
+
+        // Use a queue for level-order traversal
+        java.util.Queue<TreeNode> queue = new java.util.LinkedList<>();
+        queue.add(root);
+
+        System.out.println("Tree structure:");
+        int level = 0;
+
+        while (!queue.isEmpty()) {
+            int levelSize = queue.size();
+            System.out.print("Level " + (level+1) + ": ");
+
+            for (int i = 0; i < levelSize; i++) {
+                TreeNode node = queue.poll();
+
+                if (node == null) {
+                    System.out.print("null ");
+                } else {
+                    System.out.print(node.val + " ");
+
+                    // Add children to queue (including nulls for visualization)
+                    queue.add(node.left);
+                    queue.add(node.right);
+                }
+            }
+
+            System.out.println();
+            level++;
+
+            // Check if the next level has only nulls
+            boolean allNull = true;
+            for (TreeNode node : queue) {
+                if (node != null) {
+                    allNull = false;
+                    break;
+                }
+            }
+
+            if (allNull) {
+                break;
+            }
+        }
+    }
+
     private static String truncateStr(String s, int maxLength) {
         if (s.length() <= maxLength) {
             return s;
@@ -55,33 +124,30 @@ public class soln {
         return s.substring(0, maxLength - 3) + "...";
     }
 
-    // Overloaded method with default max length
     private static String truncateStr(String s) {
-        return truncateStr(s, TRUNC);
+        return truncateStr(s, MAX_STRING_LENGTH);
     }
 
-    // Test solution with given input and expected output
     private static boolean assertSolution(Integer[] inputList, int expected) {
-        // Create instances of our classes
         soln outer = new soln();
         Solution solution = outer.new Solution();
 
-        // Run the solution on our input
-        int output = solution.maxDepth(createBinaryTree(inputList));
+        TreeNode root = createBinaryTree(inputList);
 
-        // Check if the output matches expected
+        int output = solution.maxDepth(root);
+
         boolean assertPass = output == expected;
 
-        // Format the result string with colors using our helper methods
         String result = assertPass ? "PASS" : "FAIL";
         String formattedResult = assertPass ? greenText(result) : redText(result);
 
-        // Print the test result
         System.out.println(
                 formattedResult + ": " +
                         "Input: " + truncateStr(Arrays.toString(inputList)) + ", " +
                         "Expected: " + expected +
                         (assertPass ? "" : ", Got: " + output));
+
+        if (!assertPass) { printTree(root); }
 
         return assertPass;
     }
@@ -103,7 +169,7 @@ public class soln {
 
         // Right-skewed trees
         assertSolution(new Integer[] { 1, null, 2, null, 3 }, 3); // Right-skewed depth 3
-        assertSolution(new Integer[] { 1, null, 2, null, null, null, 3 }, 3); // Right-skewed with gaps
+        assertSolution(new Integer[] { 1, null, 2, null, null, null, 3 }, 2); // Right-skewed with gaps
 
         // Balanced trees
         assertSolution(new Integer[] { 1, 2, 3, 4, 5, 6, 7 }, 3); // Perfect binary tree depth 3
@@ -115,7 +181,7 @@ public class soln {
         assertSolution(new Integer[] { 5, 4, 7, 3, null, 2, null, null, null, 9 }, 4); // Complex tree
 
         // Trees with specific patterns
-        assertSolution(new Integer[] { 1, null, 2, 3, null, null, 4 }, 3); // Tree with zigzag pattern
+        assertSolution(new Integer[] { 1, null, 2, 3, null, null, 4 }, 4); // Tree with zigzag pattern
         assertSolution(new Integer[] { 5, 3, 6, 2, 4, null, null, 1 }, 4); // BST-like structure
     }
 }
