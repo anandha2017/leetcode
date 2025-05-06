@@ -8,35 +8,37 @@ public class soln {
 
         public boolean isBalanced(TreeNode root) {
 
+            return inOrderTraversal(root);
+        }
+
+        public boolean inOrderTraversal(TreeNode root) {
+
+            boolean isBalanced = true;
+
             if (root == null) {
                 return true;
             }
 
-            // int leftDepth = maxDepth(root.left);
-            // int rightDepth = maxDepth(root.right);
+            int leftDepth = maxDepth(root.left);
+            int rightDepth = maxDepth(root.right);
 
-            // if (leftDepth == rightDepth) {
-            //     return true;
-            // }
-
-            // if (Math.abs(leftDepth - rightDepth) <= 1) {
-            //     return true;
-            // }
-
-            return false;
-        }
-
-        public int inOrderTraversal(TreeNode root) {
-
-            if (root == null) {
-                return 0;
+            if (Math.abs(leftDepth - rightDepth) > 1) {
+                return false;
             }
 
-            inOrderTraversal(root.left);
-            inOrderTraversal(root.right);
+            isBalanced = inOrderTraversal(root.left);
+            if (isBalanced == false) {
+                return false;
+            }
 
+            isBalanced = inOrderTraversal(root.right);
+            if (isBalanced == false) {
+                return false;
+            }
 
+            return true;
         }
+
         public int maxDepth(TreeNode root) {
 
             if (root == null) {
@@ -284,11 +286,11 @@ public class soln {
 
         // Tree with zigzag pattern that is balanced
         assertSolution(new Integer[] { 1, 2, 3, null, 4, null, 5, null, null, 6 },
-                /* expected */ true);
+                /* expected */ false);
 
         // Tree that's balanced at the root but has unbalanced subtrees
         assertSolution(new Integer[] { 3, 9, 20, 4, 5, 15, 7, 6, null, null, null, null, null, null, 8 },
-                /* expected */ false);
+                /* expected */ true);
 
         // LeetCode fail
         assertSolution(new Integer[] { 1, 2, 2, 3, null, null, 3, 4, null, null, 4 },
