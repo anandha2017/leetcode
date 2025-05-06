@@ -12,20 +12,31 @@ public class soln {
                 return true;
             }
 
-            int leftDepth = maxDepth(root.left);
-            int rightDepth = maxDepth(root.right);
+            // int leftDepth = maxDepth(root.left);
+            // int rightDepth = maxDepth(root.right);
 
-            if (leftDepth == rightDepth) {
-                return true;
-            }
+            // if (leftDepth == rightDepth) {
+            //     return true;
+            // }
 
-            if (Math.abs(leftDepth - rightDepth) <= 1) {
-                return true;
-            }
+            // if (Math.abs(leftDepth - rightDepth) <= 1) {
+            //     return true;
+            // }
 
             return false;
         }
 
+        public int inOrderTraversal(TreeNode root) {
+
+            if (root == null) {
+                return 0;
+            }
+
+            inOrderTraversal(root.left);
+            inOrderTraversal(root.right);
+
+
+        }
         public int maxDepth(TreeNode root) {
 
             if (root == null) {
@@ -89,28 +100,6 @@ public class soln {
         }
 
         return root;
-    }
-
-    private static Boolean isSameTree(TreeNode p, TreeNode q) {
-
-        if ((p == null) && (q == null)) {
-            return true;
-        }
-
-        if ((p == null) && (q != null)) {
-            return false;
-        }
-
-        if ((p != null) && (q == null)) {
-            return false;
-        }
-
-        if (p.val != q.val) {
-            return false;
-        }
-
-        return (isSameTree(p.left, q.left) &&
-                isSameTree(p.right, q.right));
     }
 
     private static String treeToString(TreeNode root) {
