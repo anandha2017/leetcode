@@ -8,15 +8,15 @@ public class soln {
 
         public boolean isBalanced(TreeNode root) {
 
-            return inOrderTraversal(root);
+            return isSubtreeBalanced(root);
         }
 
-        public boolean inOrderTraversal(TreeNode root) {
+        public boolean isSubtreeBalanced(TreeNode root) {
 
             boolean isBalanced = true;
 
             if (root == null) {
-                return true;
+                return isBalanced;
             }
 
             int leftDepth = maxDepth(root.left);
@@ -26,12 +26,12 @@ public class soln {
                 return false;
             }
 
-            isBalanced = inOrderTraversal(root.left);
+            isBalanced = isSubtreeBalanced(root.left);
             if (isBalanced == false) {
                 return false;
             }
 
-            isBalanced = inOrderTraversal(root.right);
+            isBalanced = isSubtreeBalanced(root.right);
             if (isBalanced == false) {
                 return false;
             }
