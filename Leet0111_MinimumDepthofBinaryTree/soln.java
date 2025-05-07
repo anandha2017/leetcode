@@ -8,8 +8,19 @@ public class soln {
 
         public int minDepth(TreeNode root) {
 
+            return minDepth(root, 0);
+        }
+
+        public int minDepth(TreeNode root, int depth) {
+
             if (root == null) {
                 return 0;
+            }
+
+            depth += 1;
+
+            if (root.left == null && root.right == null) {
+                return depth;
             }
 
             return 1 + Math.min(
@@ -145,7 +156,8 @@ public class soln {
         String result = assertPass ? "PASS" : "FAIL";
         String formattedResult = assertPass ? greenText(result) : redText(result);
 
-        System.out.println(formattedResult + ": Output: " + output + ", Input: " + truncateStr(Arrays.toString(inputList)));
+        System.out.println(
+                formattedResult + ": Output: " + output + ", Input: " + truncateStr(Arrays.toString(inputList)));
 
         if (!assertPass) {
             System.out.println("\n=== ACTUAL TREE ===");
@@ -180,66 +192,68 @@ public class soln {
                 /* expected */ 5);
 
         // assertSolution(new Integer[] { 1, 2, null, 3, null, 4, null, 5 },
-        //         /* expected */ 5);
+        // /* expected */ 5);
 
         // // Trees with different depths on left and right
         // assertSolution(new Integer[] { 1, 2, 3, 4, null, null, 5, 6, null, null, 7 },
-        //         /* expected */ 3);
+        // /* expected */ 3);
 
         // assertSolution(new Integer[] { 1, 2, 3, 4, null, 5, 6, null, null, 7 },
-        //         /* expected */ 2);
+        // /* expected */ 2);
 
         // // Complete balanced tree
         // assertSolution(new Integer[] { 1, 2, 3, 4, 5, 6, 7 },
-        //         /* expected */ 3);
+        // /* expected */ 3);
 
         // // Complete tree with multiple levels
-        // assertSolution(new Integer[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 },
-        //         /* expected */ 4);
+        // assertSolution(new Integer[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
+        // 15 },
+        // /* expected */ 4);
 
         // // Trees with negative values (values shouldn't affect the depth calculation)
         // assertSolution(new Integer[] { -10, -20, -30 },
-        //         /* expected */ 2);
+        // /* expected */ 2);
 
         // // Large tree (edge of constraints)
         // Integer[] largeTree = new Integer[100000];
         // largeTree[0] = 1;
         // for (int i = 1; i < 100000; i++) {
-        //     if (i % 2 == 1) { // Left child
-        //         largeTree[i] = i + 1;
-        //     } else { // Right child is null
-        //         largeTree[i] = null;
-        //     }
+        // if (i % 2 == 1) { // Left child
+        // largeTree[i] = i + 1;
+        // } else { // Right child is null
+        // largeTree[i] = null;
+        // }
         // }
         // assertSolution(largeTree,
-        //         /* expected */ 50000);
+        // /* expected */ 50000);
 
         // // Tree with only left children
         // assertSolution(new Integer[] { 1, 2, null, 3, null, 4, null, 5, null },
-        //         /* expected */ 5);
+        // /* expected */ 5);
 
         // // Tree with only right children
         // assertSolution(new Integer[] { 1, null, 2, null, 3, null, 4, null, 5 },
-        //         /* expected */ 5);
+        // /* expected */ 5);
 
         // // Tree with multiple potential minimum paths
         // assertSolution(new Integer[] { 1, 2, 3, null, 4, null, 5, null, null, 6 },
-        //         /* expected */ 3);
+        // /* expected */ 3);
 
         // // Tree with leaf nodes at different levels
         // assertSolution(new Integer[] { 1, 2, 3, 4, 5, null, 6, null, null, 7, 8 },
-        //         /* expected */ 3);
+        // /* expected */ 3);
 
         // // Tree with values at the boundaries of constraints
         // assertSolution(new Integer[] { 1000, -1000, 0 },
-        //         /* expected */ 2);
+        // /* expected */ 2);
 
         // // More complex tree structures
-        // assertSolution(new Integer[] { 5, 4, 8, 11, null, 13, 4, 7, 2, null, null, null, 1 },
-        //         /* expected */ 3);
+        // assertSolution(new Integer[] { 5, 4, 8, 11, null, 13, 4, 7, 2, null, null,
+        // null, 1 },
+        // /* expected */ 3);
 
         // assertSolution(new Integer[] { 3, 1, 4, null, 2, null, 5 },
-        //         /* expected */ 3);
+        // /* expected */ 3);
 
     }
 }
