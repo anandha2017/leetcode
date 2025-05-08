@@ -3,40 +3,24 @@ package Leet0111_MinimumDepthofBinaryTree;
 import java.util.Arrays;
 import java.util.PriorityQueue;
 
-public class soln {
+public class soln_o3 {
 
     class Solution {
 
         public int minDepth(TreeNode root) {
-
-            if (root == null) {
+            if (root == null)
                 return 0;
-            }
 
-            PriorityQueue<Integer> depthQueue = new PriorityQueue<>();
+            // one child missing → must follow the other child
+            if (root.left == null)
+                return 1 + minDepth(root.right);
+            if (root.right == null)
+                return 1 + minDepth(root.left);
 
-            minDepth(root, depthQueue, 0);
-
-            return depthQueue.peek();
+            // both children present → choose the smaller depth
+            return 1 + Math.min(minDepth(root.left), minDepth(root.right));
         }
 
-        public void minDepth(TreeNode root, PriorityQueue<Integer> depthQueue, int depth) {
-
-            if (root == null) {
-                return;
-            }
-
-            depth += 1;
-
-            if (root.left == null && root.right == null) {
-                depthQueue.add(depth);
-                return;
-            }
-
-            minDepth(root.left, depthQueue, depth);
-            minDepth(root.right, depthQueue, depth);
-            return;
-        }
     }
 
     private static final int MAX_STRING_LENGTH = 50;
@@ -154,7 +138,7 @@ public class soln {
     }
 
     private static boolean assertSolution(Integer[] inputList, int expected) {
-        soln outer = new soln();
+        soln_o3 outer = new soln_o3();
         Solution solution = outer.new Solution();
 
         TreeNode tree = createBinaryTree(inputList);
@@ -254,7 +238,8 @@ public class soln {
 
         // Additional test cases for completeness
 
-        // 1. A reasonably large tree (not 10^5 nodes, but large enough to test the concept)
+        // 1. A reasonably large tree (not 10^5 nodes, but large enough to test the
+        // concept)
         Integer[] largeTree = new Integer[100];
         for (int i = 0; i < 100; i++) {
             largeTree[i] = i;
@@ -263,14 +248,15 @@ public class soln {
 
         // 2. A tree with a very deep minimum path and many shorter alternative paths
         assertSolution(new Integer[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, null, null, null, null, 10, null,
-                                      null, null, null, null, null, null, null, null, null, null, 11 },
+                null, null, null, null, null, null, null, null, null, null, 11 },
                 /* expected */ 3);
 
         // 3. A zigzag tree (alternating left and right children)
         assertSolution(new Integer[] { 1, 2, null, null, 3, 4, null, null, 5 },
                 /* expected */ 5);
 
-        // 4. A tree where all nodes have exactly one child (either left or right, but not both)
+        // 4. A tree where all nodes have exactly one child (either left or right, but
+        // not both)
         assertSolution(new Integer[] { 1, 2, null, null, 3, null, 4, 5, null, null, 6 },
                 /* expected */ 6);
 
