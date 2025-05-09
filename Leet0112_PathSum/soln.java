@@ -10,12 +10,16 @@ public class soln {
                 return false;
             }
 
-            return hasPathSum(root, targetSum, root.val);
+            return hasPathSum(root, targetSum, 0);
         }
 
         public boolean hasPathSum(TreeNode root, int targetSum, int runningTotal) {
 
-            if (root.left == null && root.left == null) {
+            if (root == null) {
+                return false;
+            }
+
+            if (root.left == null && root.right == null) {
                 if (root.val + runningTotal == targetSum) {
                     return true;
                 } else {
@@ -180,11 +184,113 @@ public class soln {
 
     public static void main(String[] args) {
 
-        // Edge cases
+        // Test case 1: Empty tree
+        assertSolution(new Integer[] {},
+                /* expected */ 0, false);
+
+        // Test case 2: Null tree
+        assertSolution(null,
+                /* expected */ 0, false);
+
+        // Test case 3: Single node tree, matching sum
+        assertSolution(new Integer[] { 1 },
+                /* expected */ 1, true);
+
+        // Test case 4: Single node tree, non-matching sum
+        assertSolution(new Integer[] { 1 },
+                /* expected */ 2, false);
+
+        // Basic cases from LeetCode examples
+        // Test case 5: Original LeetCode example with successful path
         assertSolution(new Integer[] { 5, 4, 8, 11, null, 13, 4, 7, 2, null, null, null, 1 },
                 /* expected */ 22, true);
 
+        // Test case 6: LeetCode example with no successful path
         assertSolution(new Integer[] { 1, 2, 3 },
                 /* expected */ 5, false);
+
+        // Additional cases
+        // Test case 7: Multiple possible paths, one matching
+        assertSolution(new Integer[] { 10, 5, -3, 3, 2, null, 11, 3, -2, null, 1 },
+                /* expected */ 8, false);
+
+        // Test case 8: Valid path with negative values
+        assertSolution(new Integer[] { -2, null, -3 },
+                /* expected */ -5, true);
+
+        // Test case 9: Negative values in tree but no valid path
+        assertSolution(new Integer[] { 1, -2, -3 },
+                /* expected */ 0, false);
+
+        // Test case 10: Deeper tree with valid path
+        assertSolution(new Integer[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 },
+                /* expected */ 15, true); // Path 1->2->4->8 = 15
+
+        // Test case 11: Deeper tree with no valid path
+        assertSolution(new Integer[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 },
+                /* expected */ 100, false);
+
+        // Test case 12: Zero sum path exists
+        assertSolution(new Integer[] { 0, 1, -1 },
+                /* expected */ 0, false); // Path 0->-1 = -1
+
+        // Test case 13: Zero sum with no valid path
+        assertSolution(new Integer[] { 1, 2, 3 },
+                /* expected */ 0, false);
+
+        // Test case 14: Tree with maximum negative value
+        assertSolution(new Integer[] { -1000, -1000, -1000 },
+                /* expected */ -2000, true); // Path -1000->-1000 = -2000
+
+        // Test case 15: Tree with maximum positive value
+        assertSolution(new Integer[] { 1000, 1000, 1000 },
+                /* expected */ 2000, true); // Path 1000->1000 = 2000
+
+        // Test case 16: Path at max constraint limits
+        assertSolution(new Integer[] { 1000, 1000, 1000, 1000, 1000 },
+                /* expected */ 3000, true); // Path 1000->1000->1000 = 3000
+
+        // Test case 17: Mixed positive and negative values
+        assertSolution(new Integer[] { 5, -4, 8, 11, null, 13, 4, 7, 2, null, null, null, 1 },
+                /* expected */ 14, true); // Path 5->-4->11->2 = 14
+
+        // Test case 18: Only right children
+        assertSolution(new Integer[] { 1, null, 2, null, 3, null, 4 },
+                /* expected */ 10, true); // Path 1->2->3->4 = 10
+
+        // Test case 19: Only left children
+        assertSolution(new Integer[] { 1, 2, null, 3, null, 4 },
+                /* expected */ 10, true); // Path 1->2->3->4 = 10
+
+        // Test case 20: Multiple valid paths with identical sums
+        assertSolution(new Integer[] { 5, 3, 7, 2, 4, 6, 8 },
+                /* expected */ 10, true); // Paths: 5->3->2=10 and 5->7->8=20
+
+        // Test case 21: targetSum at minimum constraint (-1000)
+        assertSolution(new Integer[] { -500, -500, 0 },
+                /* expected */ -1000, true);
+
+        // Test case 22: targetSum at maximum constraint (1000)
+        assertSolution(new Integer[] { 500, 500, 0 },
+                /* expected */ 1000, true);
+
+        // Test case 23: All zeros tree
+        assertSolution(new Integer[] { 0, 0, 0, 0, 0 },
+                /* expected */ 0, true);
+
+        // Test case 24: Testing with large trees (closer to constraint limit of 5000
+        // nodes)
+        // For practical reasons, we use a smaller example but it represents testing
+        // larger trees
+        Integer[] largeTree = new Integer[100]; // Creating a path of 100 nodes, each with value 1
+        for (int i = 0; i < 100; i++) {
+            largeTree[i] = 1;
+        }
+        assertSolution(largeTree,
+                /* expected */ 100, true); // Path of 100 ones sums to 100
+
+        // Test case 25: Sum exceeds int range but within bounds
+        assertSolution(new Integer[] { 1000, 999, 1000 },
+                /* expected */ 1999, true); // Path 1000->999 = 1999
     }
 }
