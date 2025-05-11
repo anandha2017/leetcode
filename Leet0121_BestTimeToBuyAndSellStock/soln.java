@@ -7,21 +7,20 @@ public class soln {
     class Solution {
         public int maxProfit(int[] prices) {
 
-            int buyPrice = 10000;
-            int sellPrice = -1;
-            boolean bought = false;
+            int minIndex = findMinIndex(prices);
+
+            if (minIndex + 1 == prices.length) {
+                return 0;
+            }
+
+            int buyPrice = prices[minIndex];
+            int sellPrice = 0;
             boolean sold = false;
-
-            for (int i = 0; i < prices.length; i++) {
-                if (prices[i] < buyPrice) {
-                    bought = true;
-                    buyPrice = prices[i];
-                }
-
-                if (prices[i] > buyPrice && bought) {
+            for (int i = minIndex + 1; i < prices.length; i++) {
+                if (prices[i] > buyPrice) {
                     if (prices[i] > sellPrice) {
-                        sold = true;
                         sellPrice = prices[i];
+                        sold = true;
                     }
                 }
             }
@@ -31,6 +30,21 @@ public class soln {
             }
 
             return 0;
+        }
+
+        public int findMinIndex(int[] array) {
+            if (array == null || array.length == 0) {
+                throw new IllegalArgumentException("Array cannot be null or empty");
+            }
+
+            int minIndex = 0;
+            for (int i = 0; i < array.length; i++) {
+                if (array[i] < array[minIndex]) {
+                    minIndex = i;
+                }
+            }
+
+            return minIndex;
         }
     }
 
