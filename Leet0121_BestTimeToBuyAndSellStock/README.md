@@ -118,6 +118,17 @@ Rules:
 - You must buy before you sell
 - If no profit is possible, return 0
 
+## Terminology
+
+When discussing this problem, it's helpful to use consistent terminology:
+
+- **Buy price**: The price at which you purchase the stock (should be as low as possible)
+- **Sell price**: The price at which you sell the stock (should be as high as possible)
+- **Profit**: The difference between the sell price and buy price (sell price - buy price)
+- **Local minimum**: A price that is lower than its adjacent prices, potentially a good buy point
+- **Local maximum**: A price that is higher than its adjacent prices, potentially a good sell point
+- **Global maximum profit**: The largest possible profit achievable given the constraints
+
 ## Template for Java Solution
 
 ```java
