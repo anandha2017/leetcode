@@ -7,45 +7,23 @@ public class soln {
     class Solution {
         public int maxProfit(int[] prices) {
 
-            int minIndex = findMinIndex(prices);
+            int minBuyPrice = prices[0];
+            int maxProfit = 0;
 
-            if (minIndex + 1 == prices.length) {
-                return 0;
+            for (int i = 1; i < prices.length; i++) {
+                // Calculate potential profit if we sell today
+                int currentProfit = prices[i] - minBuyPrice;
+
+                // Update maxProfit if we found a better profit
+                maxProfit = Math.max(maxProfit, currentProfit);
+
+                // Update minBuyPrice if we found a lower buy price
+                minBuyPrice = Math.min(minBuyPrice, prices[i]);
             }
 
-            int buyPrice = prices[minIndex];
-            int sellPrice = 0;
-            boolean sold = false;
-            for (int i = minIndex + 1; i < prices.length; i++) {
-                if (prices[i] > buyPrice) {
-                    if (prices[i] > sellPrice) {
-                        sellPrice = prices[i];
-                        sold = true;
-                    }
-                }
-            }
-
-            if (sold) {
-                return sellPrice - buyPrice;
-            }
-
-            return 0;
+            return maxProfit;
         }
 
-        public int findMinIndex(int[] array) {
-            if (array == null || array.length == 0) {
-                throw new IllegalArgumentException("Array cannot be null or empty");
-            }
-
-            int minIndex = 0;
-            for (int i = 0; i < array.length; i++) {
-                if (array[i] < array[minIndex]) {
-                    minIndex = i;
-                }
-            }
-
-            return minIndex;
-        }
     }
 
     private static final int MAX_STRING_LENGTH = 50;
