@@ -26,5 +26,4 @@ public class soln {
             helper(root.right, result);
         }
     }
-
 }

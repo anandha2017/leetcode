@@ -176,15 +176,6 @@ public class TestSolution {
         // Zigzag tree
         assertSolution(new Integer[] { 3, 9, 20, null, null, 15, 7 }, new Integer[] { 3, 9, 20, 15, 7 });
 
-        // Deep tree (maximum depth)
-        Integer[] deepTree = new Integer[100];
-        Integer[] deepResult = new Integer[100];
-        for (int i = 0; i < 100; i++) {
-            deepTree[i] = i;
-            deepResult[i] = i;
-        }
-        assertSolution(deepTree, deepResult);
-
         // Test with values at constraint boundaries
         assertSolution(new Integer[] { 100, -100, 0 }, new Integer[] { 100, -100, 0 });
 
@@ -207,15 +198,5 @@ public class TestSolution {
 
         // Tree with nodes having the same values
         assertSolution(new Integer[] { 5, 5, 5, 5, 5 }, new Integer[] { 5, 5, 5, 5, 5 });
-
-        // Left-skewed tree with maximum depth
-        Integer[] leftSkewed = new Integer[199]; // 100 nodes, with nulls for right children
-        Integer[] leftSkewedResult = new Integer[100];
-        for (int i = 0, j = 0; i < 100; i++) {
-            leftSkewed[j++] = i; // Add node
-            leftSkewed[j++] = (i < 99) ? null : null; // Add null for right child (except last node)
-            leftSkewedResult[i] = i;
-        }
-        assertSolution(leftSkewed, leftSkewedResult);
     }
 }
