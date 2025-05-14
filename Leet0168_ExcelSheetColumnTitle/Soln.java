@@ -12,7 +12,7 @@ public class Soln {
                 columnNumber--;
                 remainder = columnNumber % 26;
                 result = digits.charAt(remainder) + result;
-                columnNumber = columnNumber / 26;
+                columnNumber /= 26;
             }
 
             return result;
