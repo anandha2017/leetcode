@@ -31,7 +31,7 @@ public class TestSolution {
                 formattedResult + ": " +
                         "- Output: " + (output == null ? "null" : output) +
                         ", Expected: " + expected +
-                        ", ColumnNuber: " + columnNumber);
+                        ", ColumnNumber: " + columnNumber);
 
         return assertPass;
     }
@@ -76,5 +76,8 @@ public class TestSolution {
         assertSolution(18278, "ZZZ"); // Last 3-char
         assertSolution(18279, "AAAA"); // First 4-char
 
+        // testing Leet0171 Excel Sheet Column Number
+       assertSolution(1378, "AZZ");
+       assertSolution(331252, "RUZL");
     }
 }
