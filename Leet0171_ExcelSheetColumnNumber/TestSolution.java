@@ -1,6 +1,7 @@
 package Leet0171_ExcelSheetColumnNumber;
 
 import Leet0171_ExcelSheetColumnNumber.Soln.Solution;
+//import Leet0171_ExcelSheetColumnNumber.Soln_o3.Solution;
 
 public class TestSolution {
     private static final String ANSI_RESET = "\u001B[0m";
@@ -18,6 +19,7 @@ public class TestSolution {
     private static boolean assertSolution(String columnTitle, int expected) {
 
         Soln outer = new Soln();
+        //Soln_o3 outer = new Soln_o3();
         Solution solution = outer.new Solution();
 
         int output = solution.titleToNumber(columnTitle);
