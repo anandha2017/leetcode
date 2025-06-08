@@ -17,17 +17,21 @@ public class Soln {
                 }
             }
 
-            ListNode prev = head;
-            ListNode next = head.next;
+            ListNode current = head;
+            ListNode prev = null;
 
-            while (prev != null) {
-                if (next.val == val) {
-                    prev.next = next.next;
-                    next = next.next.next;
-
+            while (current != null) {
+                if (current.val == val) {
+                    if (current == head) {
+                        head = head.next;
+                        current = head;
+                    } else {
+                        prev.next = current.next;
+                        current = current.next;
+                    }
                 } else {
-                    prev = next;
-                    next = next.next;
+                    prev = current;
+                    current = current.next;
                 }
             }
 
