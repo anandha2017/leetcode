@@ -83,7 +83,7 @@ public class TestSolution {
 
                 assertSolution("abba", "cdde", false, "Broken palindromic pattern");
 
-                assertSolution("racecar", "xyzzyzx", true, "Long palindrome");
+                assertSolution("racecar", "xyzzyzx", false, "Long palindrome");
 
                 // Alternating patterns
                 assertSolution("abab", "cdcd", true, "Alternating pattern");
@@ -162,7 +162,7 @@ public class TestSolution {
 
                 assertSolution("abc", "def", true, "Simple sequential unique");
 
-                assertSolution("bbbaaaba", "aaabbbab", false, "Complex pattern mismatch");
+                assertSolution("bbbaaaba", "aaabbbab", true, "Complex pattern mismatch");
 
                 // Maximum length considerations (substring of max constraint)
                 assertSolution("a".repeat(100), "b".repeat(100), true, "Long single char mapping");
@@ -172,7 +172,7 @@ public class TestSolution {
                 assertSolution("ab".repeat(50), "xx".repeat(50), false, "Long pattern with collision");
 
                 // Unicode/ASCII boundary
-                assertSolution("~!@#$%^&*()", "1234567890", true, "Special chars to numbers");
+                assertSolution("~!@#$%^&*()", "1234567890", false, "Special chars to numbers");
 
                 assertSolution("AaBbCc", "XxYyZz", true, "Mixed case mapping");
 
@@ -183,7 +183,7 @@ public class TestSolution {
 
                 assertSolution("abcdefg", "abcdefg", true, "No transformation needed");
 
-                assertSolution("abcdefg", "abcdefh", false, "Single char difference");
+                assertSolution("abcdefg", "abcdefh", true, "Single char difference");
 
                 // Final comprehensive cases
                 assertSolution("abcabcabc", "xyzxyzxyz", true, "Triple repetition");
