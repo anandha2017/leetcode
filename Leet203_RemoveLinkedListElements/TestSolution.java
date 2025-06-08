@@ -2,10 +2,6 @@ package Leet203_RemoveLinkedListElements;
 
 import Leet203_RemoveLinkedListElements.Soln.Solution;
 
-/**
- * Test class for the LinkedListCycle problem.
- * This file contains test cases and utility methods for testing your solution.
- */
 public class TestSolution {
     private static final String ANSI_RESET = "\u001B[0m";
     private static final String ANSI_GREEN = "\u001B[92m";
