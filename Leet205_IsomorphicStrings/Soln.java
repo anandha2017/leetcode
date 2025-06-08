@@ -14,22 +14,32 @@ public class Soln {
                 return true;
             }
 
-            HashMap<String, String> seen = new HashMap<String, String>();
+            HashMap<String, String> seenS = new HashMap<String, String>();
+            HashMap<String, String> seenT = new HashMap<String, String>();
 
             for (int i = 0; i < s.length(); i++) {
-                if (seen.containsKey(String.valueOf(s.charAt(i)))) {
-                    String tmp = seen.get(String.valueOf(s.charAt(i)));
+                if (seenS.containsKey(String.valueOf(s.charAt(i)))) {
+                    String tmp = seenS.get(String.valueOf(s.charAt(i)));
 
                     if (!tmp.equals(String.valueOf(t.charAt(i)))) {
                         return false;
                     }
                 } else {
-                    seen.put(String.valueOf(s.charAt(i)), String.valueOf(t.charAt(i)));
+                    seenS.put(String.valueOf(s.charAt(i)), String.valueOf(t.charAt(i)));
                 }
 
+                if (seenT.containsKey(String.valueOf(t.charAt(i)))) {
+                    String tmp = seenT.get(String.valueOf(t.charAt(i)));
+
+                    if (!tmp.equals(String.valueOf(s.charAt(i)))) {
+                        return false;
+                    }
+                } else {
+                    seenT.put(String.valueOf(t.charAt(i)), String.valueOf(s.charAt(i)));
+                }
             }
+
             return true;
         }
     }
-
 }
