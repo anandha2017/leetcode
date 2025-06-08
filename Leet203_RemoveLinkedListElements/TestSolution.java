@@ -45,9 +45,27 @@ public class TestSolution {
             }
         }
 
-        System.out.println(linkedListToString(head));
-
         return head;
+    }
+
+    private static Boolean isEqual(ListNode headA, ListNode headB) {
+
+        if ((headA == null) && (headB == null)) {
+            return true;
+        }
+
+        ListNode currentA = headA;
+        ListNode currentB = headB;
+
+        while ((currentA != null) && (currentB != null)) {
+            if (currentA.val != currentB.val) {
+                return false;
+            }
+            currentA = currentA.next;
+            currentB = currentB.next;
+        }
+
+        return true;
     }
 
     private static String linkedListToString(ListNode head) {
@@ -73,32 +91,23 @@ public class TestSolution {
         Soln outer = new Soln();
         Solution solution = outer.new Solution();
 
-        // Create the linked lists using the helper method
         ListNode inputList = createLinkedList(input);
+        ListNode expectedList = createLinkedList(expected);
+
         ListNode outputList = solution.removeElements(inputList, val);
 
-        // boolean assertPass;
-        // if (expected == 0) {
-        // // Expected no intersection
-        // assertPass = (output == null);
-        // } else {
-        // // Expected an intersection with specific value
-        // assertPass = (output != null && output.val == expected);
-        // }
+        boolean assertPass = isEqual(outputList, expectedList);
 
-        // String result = assertPass ? "PASS" : "FAIL";
-        // String formattedResult = assertPass ? greenText(result) : redText(result);
+        String result = assertPass ? "PASS" : "FAIL";
+        String formattedResult = assertPass ? greenText(result) : redText(result);
 
-        // System.out.println(
-        // formattedResult + ": " + testName +
-        // " - Output: " + (output == null ? "null" : output.val) +
-        // ", Expected: " + expected +
-        // ", Intersection: " + (intersectionNode == null ? "null" :
-        // intersectionNode.val) +
-        // ", ListA: " + truncateStr(linkedListToString(headA)) +
-        // ", ListB: " + truncateStr(linkedListToString(headB)));
+        System.out.println(
+                formattedResult + ": " + testName +
+                        ", Input: " + truncateStr(linkedListToString(inputList)) +
+                        ", Output: " + truncateStr(linkedListToString(outputList)) +
+                        ", Expected: " + truncateStr(linkedListToString(expectedList)));
 
-        return false;
+        return assertPass;
     }
 
     public static void main(String[] args) {
