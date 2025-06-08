@@ -104,6 +104,7 @@ public class TestSolution {
         System.out.println(
                 formattedResult + ": " + testName +
                         ", Input: " + truncateStr(linkedListToString(inputList)) +
+                        ", Val: " + val +
                         ", Output: " + truncateStr(linkedListToString(outputList)) +
                         ", Expected: " + truncateStr(linkedListToString(expectedList)));
 
