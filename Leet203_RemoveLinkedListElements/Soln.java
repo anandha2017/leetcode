@@ -10,11 +10,13 @@ public class Soln {
                 return head;
             }
 
-            // edge case - head.next is niull
+            // edge case - head.next is null
             if (head.next == null) {
                 if (head.val == val) {
                     return head.next;
                 }
+
+                return head;
             }
 
             ListNode current = head;
