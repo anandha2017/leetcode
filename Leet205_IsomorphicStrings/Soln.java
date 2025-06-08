@@ -6,36 +6,37 @@ public class Soln {
 
     class Solution {
         public boolean isIsomorphic(String s, String t) {
+
+            if (s == null || t == null) {
+                return s == t; // Both null = true, one null = false
+            }
+
             if (s.length() != t.length()) {
                 return false;
             }
 
-            if ((s.length() == 1) && (t.length() == 1)) {
-                return true;
-            }
-
-            HashMap<String, String> seenS = new HashMap<String, String>();
-            HashMap<String, String> seenT = new HashMap<String, String>();
+            HashMap<Character, Character> sToT = new HashMap<>();
+            HashMap<Character, Character> tToS = new HashMap<>();
 
             for (int i = 0; i < s.length(); i++) {
-                if (seenS.containsKey(String.valueOf(s.charAt(i)))) {
-                    String tmp = seenS.get(String.valueOf(s.charAt(i)));
+                if (sToT.containsKey(s.charAt(i))) {
+                    Character tmp = sToT.get(s.charAt(i));
 
-                    if (!tmp.equals(String.valueOf(t.charAt(i)))) {
+                    if (!tmp.equals(t.charAt(i))) {
                         return false;
                     }
                 } else {
-                    seenS.put(String.valueOf(s.charAt(i)), String.valueOf(t.charAt(i)));
+                    sToT.put(s.charAt(i), t.charAt(i));
                 }
 
-                if (seenT.containsKey(String.valueOf(t.charAt(i)))) {
-                    String tmp = seenT.get(String.valueOf(t.charAt(i)));
+                if (tToS.containsKey(t.charAt(i))) {
+                    Character tmp = tToS.get(t.charAt(i));
 
-                    if (!tmp.equals(String.valueOf(s.charAt(i)))) {
+                    if (!tmp.equals(s.charAt(i))) {
                         return false;
                     }
                 } else {
-                    seenT.put(String.valueOf(t.charAt(i)), String.valueOf(s.charAt(i)));
+                    tToS.put(t.charAt(i), s.charAt(i));
                 }
             }
 
@@ -43,11 +44,12 @@ public class Soln {
         }
 
         /**
-         * Optimized version of isIsomorphic with O(1) space complexity for ASCII characters.
-         * Eliminates string conversions and uses char arrays for faster lookups.
+         * Optimized version of isIsomorphic with O(1) space complexity for ASCII
+         * characters. Eliminates string conversions and uses char arrays for faster
+         * lookups.
          *
-         * Time Complexity: O(n) where n is the length of the strings
-         * Space Complexity: O(1) for ASCII characters (256 fixed size arrays)
+         * Time Complexity: O(n) where n is the length of the strings Space Complexity:
+         * O(1) for ASCII characters (256 fixed size arrays)
          *
          * @param s First string
          * @param t Second string
