@@ -153,6 +153,72 @@ Consider these aspects when implementing your solution:
 - **Time Complexity:** Aim for O(n) where n is the number of nodes
 - **Space Complexity:** Consider both O(1) iterative and O(n) recursive solutions
 
+## Pseudocode
+
+### Iterative Approach
+```
+FUNCTION reverseList(head):
+    SET previous = null
+    SET current = head
+
+    WHILE current is not null:
+        SET nextTemp = current.next     // Store the next node
+        SET current.next = previous     // Reverse the link
+        SET previous = current          // Move previous forward
+        SET current = nextTemp          // Move current forward
+
+    RETURN previous  // previous is now the new head
+END FUNCTION
+```
+
+### Recursive Approach
+```
+FUNCTION reverseList(head):
+    // Base case: empty list or single node
+    IF head is null OR head.next is null:
+        RETURN head
+
+    // Recursively reverse the rest of the list
+    SET reversedHead = reverseList(head.next)
+
+    // Reverse the current connection
+    SET head.next.next = head
+    SET head.next = null
+
+    RETURN reversedHead
+END FUNCTION
+```
+
+### Pointer Movement Visualisation (Iterative)
+
+For list `[1,2,3]`, here's how the pointers move:
+
+```
+Initial state:
+prev = null, curr = 1, next = ?
+null    1 -> 2 -> 3 -> null
+
+Step 1:
+next = 2 (store next)
+1.next = null (reverse link)
+prev = 1, curr = 2
+null <- 1    2 -> 3 -> null
+
+Step 2:
+next = 3 (store next)
+2.next = 1 (reverse link)
+prev = 2, curr = 3
+null <- 1 <- 2    3 -> null
+
+Step 3:
+next = null (store next)
+3.next = 2 (reverse link)
+prev = 3, curr = null
+null <- 1 <- 2 <- 3    null
+
+Return prev (which is 3, the new head)
+```
+
 ## Follow-up Question
 
 Can you solve this problem both iteratively and recursively?

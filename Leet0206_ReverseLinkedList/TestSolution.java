@@ -87,7 +87,8 @@ public class TestSolution {
         ListNode inputListCopy = createLinkedList(input);
         ListNode expectedList = createLinkedList(expected);
 
-        ListNode outputList = solution.reverseList(inputList);
+        //ListNode outputList = solution.reverseList(inputList);
+        ListNode outputList = solution.reverseListRecursive(inputList);
 
         boolean assertPass = isEqual(outputList, expectedList);
 
@@ -103,6 +104,44 @@ public class TestSolution {
     }
 
     public static void main(String[] args) {
-        assertSolution(new int[] { 1, 2, 3, 4, 5, 6, 7 }, new int[] { 7, 6, 5, 4, 3, 2, 1 }, "Example 1 - Basic");
+        // Edge Cases - Empty and Single Node
+        assertSolution(new int[] {}, new int[] {}, "Edge Case - Empty list");
+        assertSolution(new int[] { 1 }, new int[] { 1 }, "Edge Case - Single node");
+
+        // Basic Cases
+        assertSolution(new int[] { 1, 2 }, new int[] { 2, 1 }, "Basic - Two nodes");
+        assertSolution(new int[] { 1, 2, 3 }, new int[] { 3, 2, 1 }, "Basic - Three nodes");
+        assertSolution(new int[] { 1, 2, 3, 4, 5 }, new int[] { 5, 4, 3, 2, 1 }, "Basic - Five nodes");
+
+        // Boundary Value Testing
+        assertSolution(new int[] { -5000 }, new int[] { -5000 }, "Boundary - Minimum value single");
+        assertSolution(new int[] { 5000 }, new int[] { 5000 }, "Boundary - Maximum value single");
+        assertSolution(new int[] { -5000, 5000 }, new int[] { 5000, -5000 }, "Boundary - Min max pair");
+        assertSolution(new int[] { 0 }, new int[] { 0 }, "Boundary - Zero value");
+
+        // Negative Numbers
+        assertSolution(new int[] { -1, -2, -3 }, new int[] { -3, -2, -1 }, "Negative - All negative");
+        assertSolution(new int[] { -10, 0, 10 }, new int[] { 10, 0, -10 }, "Mixed - Negative zero positive");
+
+        // Duplicate Values
+        assertSolution(new int[] { 1, 1, 1 }, new int[] { 1, 1, 1 }, "Duplicates - All same");
+        assertSolution(new int[] { 5, 3, 5, 1, 5 }, new int[] { 5, 1, 5, 3, 5 }, "Duplicates - Mixed values");
+        assertSolution(new int[] { 2, 2, 3, 3 }, new int[] { 3, 3, 2, 2 }, "Duplicates - Pairs");
+
+        // Longer Lists
+        assertSolution(new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }, new int[] { 10, 9, 8, 7, 6, 5, 4, 3, 2, 1 },
+                "Long - Ten elements");
+
+        // Random Patterns
+        assertSolution(new int[] { 42, 17, 99, 3 }, new int[] { 3, 99, 17, 42 }, "Random - Mixed values");
+        assertSolution(new int[] { 100, -50, 0, 25, -75 }, new int[] { -75, 25, 0, -50, 100 }, "Random - Mixed signs");
+
+        // Already Sorted Patterns
+        assertSolution(new int[] { 1, 2, 3, 4 }, new int[] { 4, 3, 2, 1 }, "Sorted - Ascending");
+        assertSolution(new int[] { 4, 3, 2, 1 }, new int[] { 1, 2, 3, 4 }, "Sorted - Descending");
+
+        // Large Values within Constraints
+        assertSolution(new int[] { 4999, -4999, 0, 2500, -1250 }, new int[] { -1250, 2500, 0, -4999, 4999 },
+                "Large - Near boundary values");
     }
 }
