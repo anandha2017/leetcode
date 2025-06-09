@@ -1,6 +1,6 @@
-package Leet205_IsomorphicStrings;
+package Leet0205_IsomorphicStrings;
 
-import Leet205_IsomorphicStrings.Soln.Solution;
+import Leet0205_IsomorphicStrings.Soln.Solution;
 
 public class TestSolution {
         private static final String ANSI_RESET = "\u001B[0m";

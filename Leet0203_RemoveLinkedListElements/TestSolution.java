@@ -1,6 +1,6 @@
-package Leet203_RemoveLinkedListElements;
+package Leet0203_RemoveLinkedListElements;
 
-import Leet203_RemoveLinkedListElements.Soln.Solution;
+import Leet0203_RemoveLinkedListElements.Soln.Solution;
 
 public class TestSolution {
     private static final String ANSI_RESET = "\u001B[0m";

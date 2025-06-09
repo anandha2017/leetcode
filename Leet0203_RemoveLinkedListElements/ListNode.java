@@ -1,4 +1,4 @@
-package Leet203_RemoveLinkedListElements;
+package Leet0203_RemoveLinkedListElements;
 
 /**
  * Definition for singly-linked list node.

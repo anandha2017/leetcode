@@ -1,4 +1,4 @@
-package Leet205_IsomorphicStrings;
+package Leet0205_IsomorphicStrings;
 
 import java.util.HashMap;
 
