@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Soln {
-    class Solution {
+    public class Solution {
         public boolean containsDuplicate(int[] nums) {
             Set<Integer> numbers = new HashSet<>();
 

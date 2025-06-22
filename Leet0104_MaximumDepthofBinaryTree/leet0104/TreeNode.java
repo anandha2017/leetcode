@@ -1,3 +1,5 @@
+package leet0104;
+
 public class TreeNode {
     int val;
     TreeNode left;

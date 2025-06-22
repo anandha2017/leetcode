@@ -1,3 +1,5 @@
+package leet0104;
+
 import java.util.Arrays;
 
 public class soln {
